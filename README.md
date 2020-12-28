@@ -1,4 +1,4 @@
-# twitter-bot
+# TWITTER-BOT
 
 [![Twitter Follow](https://img.shields.io/twitter/follow/Damien_Fremont?style=social)](https://twitter.com/Damien_Fremont)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -27,7 +27,7 @@ twitter.<YOUR_ACCOUNT>.TWITTER_FOLLOWFOLLOWING_USERS = <ANOTHER ACCOUNT>
 ```
 
 ```bash
-$ python .\src\app.py
+$ python .\src\main.py
 ```
 ---
 

@@ -38,7 +38,7 @@ def on_status(me, tweet):
     return count
 
 
-def do(api, userID):
+def main(api, userID):
     me = api.me()
     if userID == me.screen_name:
         return
@@ -49,12 +49,7 @@ def do(api, userID):
     logger.info(f"{count} tweets liked from @{userID}")
 
 
-def doBatch(api):
-    users = os.getenv("TWITTER_FAVTWEET_USERS").split(',')
-    for userID in users:
-        do(api, userID)
-
-
-def main():
+if __name__ == "__main__":
     api = create_api()
-    doBatch(api)
+    userID = os.getenv("TWITTER_FAVUSERTWEET_USER")
+    main(api, userID)

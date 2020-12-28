@@ -1,11 +1,11 @@
 import os
 import logging
 import datetime
-from twitterbot import configuration
+import config
 from twitterbot.config import create_api
-from twitterbot import favtweet
+from twitterbot import favusertweet
 from twitterbot import followfollowers
-from twitterbot import followfollowing
+from twitterbot import followuserfollowing
 
 APP_NAME = "app"
 MODULE_NAME = "twitter"
@@ -29,26 +29,30 @@ stderr_log_handler.setFormatter(formatter)
 
 logger.setLevel(logging.INFO)
 
-
 def main():
-    logger.info("***************************")
-    logger.info("* Twitter                 *")
-    logger.info("***************************")
     logger.info("")
-    configuration.init()
+    logger.info("*****************")
+    logger.info("* Twitter Bots  *")
+    logger.info("*****************")
+    logger.info("")
+    config.init()
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
         logger.info(f"Account @{account}")
-        configuration.switch(account)
+        config.switch(account)
         features = os.getenv("TWITTER_FEATURES").split(',')
         logger.info(f"Features {features}")
         api = create_api()
         if 'favtweet' in features:
-            favtweet.doBatch(api)
+            users = os.getenv("TWITTER_FAVUSERTWEET_USERS").split(',')
+            for userID in users:
+                favusertweet.main(api, userID)
         if 'followfollowers' in features:
-            followfollowers.last20(api)
+            followfollowers.main(api)
         if 'followfollowing' in features:
-            followfollowing.last20Batch(api)
+            users = os.getenv("TWITTER_FOLLOWUSERFOLLOWING_USERS").split(',')
+            for userId in users:
+                followuserfollowing.main(api, userId)
         # if 'tweetrandom' in features:
             # tweetrandom.main()
         # if 'retweettag' in features:
@@ -59,7 +63,10 @@ def main():
             # TODO
         # if 'retweetmentions' in features:
             # TODO
+        # if 'unfollowinactive' in features:
+            # TODO
         logger.info("")
+    logger.info("End with success.")
 
 
 if __name__ == "__main__":

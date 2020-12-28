@@ -21,15 +21,11 @@ def follow_followers(api):
     return count
 
 
-def last20(api):
+def main(api):
     count = follow_followers(api)
     logger.info(f"{count} followers followed")
 
 
-def main():
-    api = create_api()
-    last20(api)
-
-
 if __name__ == "__main__":
-    main()
+    api = create_api()
+    main(api)

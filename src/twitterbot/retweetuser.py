@@ -24,34 +24,34 @@ def on_status(me, tweet):
             tweet.user.id == me.id:
         # This tweet is a reply or I'm its author so, ignore it
         return count
-    if not tweet.favorited:
-        # Retweet, since we have not retweeted it yet
+    if not tweet.retweeted:
+        # Mark it as Liked, since we have not done it yet
         try:
-            tweet.favorite()
+            tweet.retweet()
             count += 1
             logger.info(
-                f" liked tweet id:{tweet.id} from @{tweet.user.screen_name}")
+                f" retweet tweet id:{tweet.id} from @{tweet.user.screen_name}")
             time.sleep(15)
         except Exception as e:
             logger.error(
-                f"Error on like tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
+                f"Error on retweet tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
     return count
 
 
-def fav_user_tweet(api, userID):
+def retweet_user(api, userID):
     count = 0
     me = api.me()
     tweets = get_last_tweets(api, userID)
     for tweet in tweets:
         count += on_status(me, tweet)
-    logger.info(f"{count} tweets liked from @{userID}")
+    logger.info(f"{count} tweets retweet from @{userID}")
 
 
 def main():
     api = create_api()
-    userID = os.getenv("TWITTER_FAVUSERTWEET_USER")
+    userID = os.getenv("TWITTER_RETWEETUSERTWEET_USER")
     while True:
-        fav_user_tweet(api, userID)
+        retweet_user(api, userID)
         logger.info("Waiting...")
         time.sleep(60)
 

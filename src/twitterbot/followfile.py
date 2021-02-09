@@ -7,8 +7,8 @@ import os, time, sys
 logger = logging.getLogger('twitter')
 
 
-def follow_file_following_write(api, screen_name):
-    file_name = f"following-@{screen_name}.csv"
+def follow_file_write(api, screen_name):
+    file_name = f"friends-@{screen_name}.csv"
     try:
         friends = api.friends_ids(screen_name) 
         file = open(file_name, 'w')
@@ -21,28 +21,28 @@ def follow_file_following_write(api, screen_name):
     logger.info(f"{len(friends)} user ids write to file {file_name}")
 
 
-def follow_file_following(api, file_name, max):
+def follow_file(api, file_name, max):
     count = 0
     i = 0
     try:
+        me = api.me()
         with open(file_name, "r") as file:
             lines = file.readlines()
-            # file.seek(0)
             for line in lines:
                 if i >= max:
                     break
                 follower = api.get_user(line)
-                if not follower.following:
-                    logger.info(f"  Following @{follower.screen_name}")
-                    follower.follow()
-                    count += 1
-                    time.sleep(5)
+                if follower != me and not follower.following:
+                        logger.info(f"  Following @{follower.screen_name}")
+                        follower.follow()
+                        count += 1
+                        time.sleep(5)
                 i += 1
-                logger.info(f"  removing from file {file_name} @{follower.screen_name} ")
                 delete_line_in_file(file_name, f"{str(line)}")
     except Exception as e:
         logger.warning(e)
     logger.info(f"{count}/{i} users followed from file {file_name} ")
+    logger.info(f"{i} lines removing from file {file_name} ")
 
 
 def delete_line_in_file(file_name, search_line):
@@ -54,13 +54,12 @@ def delete_line_in_file(file_name, search_line):
                 f.write(i)
         f.truncate()
 
+
 def main():
     api = create_api()
-    userId = os.getenv("TWITTER_FOLLOWUSERFOLLOWING_USER")
-    while True:
-        follow_user_following(api)
-        logger.info("Waiting...")
-        time.sleep(60)
+    file_name = os.getenv("TWITTER_FOLLOWFILE")
+    max = 21
+    follow_file_following(api, file_name, max)
 
 
 if __name__ == "__main__":

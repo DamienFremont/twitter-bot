@@ -6,6 +6,7 @@ from twitterbot.config import create_api
 from twitterbot.favusertweet import fav_user_tweet
 from twitterbot.followfollowers import follow_followers
 from twitterbot.followuserfollowing import follow_user_following
+from twitterbot.followfile import follow_file
 from twitterbot.unfollowinactive import unfollow_inactive
 from twitterbot.retweetuser import retweet_user
 import time
@@ -59,6 +60,9 @@ def run():
             users = os.getenv("TWITTER_FOLLOWUSERFOLLOWING_USERS").split(',')
             for userId in users:
                 follow_user_following(api, userId)
+        if 'followfile' in features:
+            file_name = os.getenv("TWITTER_FOLLOWFILE")
+            follow_file(api, file_name, 21)
         # if 'tweetgenerate' in features:
             # tweetgenerate.main()
         # if 'retweettag' in features:

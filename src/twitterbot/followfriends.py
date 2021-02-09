@@ -6,7 +6,7 @@ import time
 logger = logging.getLogger('twitter')
 
 
-def follow_user_following(api, userId):
+def follow_friends(api, userId):
     count = 0
     try:
         for follower in api.friends(userId):
@@ -17,14 +17,14 @@ def follow_user_following(api, userId):
                 time.sleep(5)
     except Exception as e:
         logger.warning(f"Rate limit exceeded")
-    logger.info(f"{count} users followed from @{userId} following")
+    logger.info(f"{count} friends followed from @{userId}")
 
 
 def main():
     api = create_api()
-    userId = os.getenv("TWITTER_FOLLOWUSERFOLLOWING_USER")
+    userId = os.getenv("TWITTER_FOLLOWFRIENDS_USERS")
     while True:
-        follow_user_following(api, userId)
+        follow_friends(api, userId)
         logger.info("Waiting...")
         time.sleep(60)
 

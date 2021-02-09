@@ -5,7 +5,7 @@ import config
 from twitterbot.config import create_api
 from twitterbot.favusertweet import fav_user_tweet
 from twitterbot.followfollowers import follow_followers
-from twitterbot.followuserfollowing import follow_user_following
+from twitterbot.followfriends import follow_friends
 from twitterbot.followfile import follow_file
 from twitterbot.unfollowinactive import unfollow_inactive
 from twitterbot.retweetuser import retweet_user
@@ -56,21 +56,21 @@ def run():
                 fav_user_tweet(api, userID)
         if 'followfollowers' in features:
             follow_followers(api)
-        if 'followfollowing' in features:
-            users = os.getenv("TWITTER_FOLLOWUSERFOLLOWING_USERS").split(',')
+        if 'followfriends' in features:
+            users = os.getenv("TWITTER_FOLLOWFRIENDS_USERS").split(',')
             for userId in users:
-                follow_user_following(api, userId)
+                follow_friends(api, userId)
         if 'followfile' in features:
-            file_name = os.getenv("TWITTER_FOLLOWFILE")
-            follow_file(api, file_name, 21)
-        # if 'tweetgenerate' in features:
-            # tweetgenerate.main()
-        # if 'retweettag' in features:
-            # TODO
+            max = 21
+            follow_file(api, max)
         if 'retweetuser' in features:
             users = os.getenv("TWITTER_RETWEETUSER_USERS").split(',')
             for userId in users:
                 retweet_user(api, userId)
+        # if 'tweetgenerate' in features:
+            # tweetgenerate.main()
+        # if 'retweettag' in features:
+            # TODO
         # if 'favmentions' in features:
             # TODO
         # if 'retweetmentions' in features:

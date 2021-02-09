@@ -21,11 +21,12 @@ def follow_file_write(api, screen_name):
     logger.info(f"{len(friends)} user ids write to file {file_name}")
 
 
-def follow_file(api, file_name, max):
+def follow_file(api, max):
+    me = api.me()
+    file_name = f"followfile-@{me.screen_name}.csv"
     count = 0
     i = 0
     try:
-        me = api.me()
         with open(file_name, "r") as file:
             lines = file.readlines()
             for line in lines:
@@ -41,7 +42,7 @@ def follow_file(api, file_name, max):
                 delete_line_in_file(file_name, f"{str(line)}")
     except Exception as e:
         logger.warning(e)
-    logger.info(f"{count}/{i} users followed from file {file_name} ")
+    logger.info(f"{count} users followed from file {file_name} ")
     logger.info(f"{i} lines removing from file {file_name} ")
 
 
@@ -57,9 +58,8 @@ def delete_line_in_file(file_name, search_line):
 
 def main():
     api = create_api()
-    file_name = os.getenv("TWITTER_FOLLOWFILE")
     max = 21
-    follow_file_following(api, file_name, max)
+    follow_file_following(api, max)
 
 
 if __name__ == "__main__":

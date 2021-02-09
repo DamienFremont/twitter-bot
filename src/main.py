@@ -78,10 +78,10 @@ def run():
 
 
 def main():
-    while True:
-        run()
-        logger.info("Waiting...")
-        time.sleep(60 * 60)
+    # while True:
+    run()
+    # logger.info("Waiting...")
+    # time.sleep(60 * 60)
 
 
 if __name__ == "__main__":

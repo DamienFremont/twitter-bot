@@ -12,7 +12,7 @@ def follow_followers(api):
     try:
         for follower in api.followers(me.screen_name):
             if not follower.following:
-                logger.info(f"Following @{follower.screen_name}")
+                logger.info(f"  Following @{follower.screen_name}")
                 follower.follow()
                 count += 1
                 time.sleep(5)

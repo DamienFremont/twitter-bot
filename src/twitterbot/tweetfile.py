@@ -35,10 +35,13 @@ def tweet_file(api, file_name):
     try:
         # EXT
         jpg = file_name.replace(".txt", ".jpg")
+        png = file_name.replace(".txt", ".png")
         gif = file_name.replace(".txt", ".gif")
         # POST
         if os.path.isfile(jpg):
             api.update_with_media(filename = jpg, status = text) 
+        elif os.path.isfile(png):
+            api.update_with_media(filename = png, status = text) 
         elif os.path.isfile(gif):
             api.update_with_media(filename = gif, status = text) 
         else:

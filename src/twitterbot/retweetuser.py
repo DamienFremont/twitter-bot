@@ -10,7 +10,7 @@ logger = logging.getLogger('twitter')
 def get_last_tweets(api, userID):
     return api.user_timeline(screen_name=userID,
                              # 200 is the maximum allowed count
-                             count=50,
+                             count=5,
                              include_rts=False,
                              # Necessary to keep full_text
                              # otherwise only the first 140 words are extracted
@@ -42,7 +42,7 @@ def retweet_user(api, userID):
     count = 0
     me = api.me()
     tweets = get_last_tweets(api, userID)
-    for tweet in tweets:
+    for tweet in reversed(tweets):
         count += on_status(me, tweet)
     logger.info(f"{count} tweets retweet from @{userID}")
 

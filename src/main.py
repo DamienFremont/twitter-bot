@@ -9,6 +9,7 @@ from twitterbot.followfriends import follow_friends
 from twitterbot.followfile import follow_file
 from twitterbot.unfollowinactive import unfollow_inactive
 from twitterbot.retweetuser import retweet_user
+from twitterbot.tweetfile import tweet_file_random
 import time
 
 APP_NAME = "app"
@@ -21,7 +22,7 @@ now = datetime.datetime.now()
 logger = logging.getLogger(MODULE_NAME)
 
 file_log_handler = logging.FileHandler(
-    f"{APP_NAME}-{now.strftime(DATE_FMT)}.log")
+    f"logs/{APP_NAME}-{now.strftime(DATE_FMT)}.log")
 logger.addHandler(file_log_handler)
 
 stderr_log_handler = logging.StreamHandler()
@@ -67,16 +68,16 @@ def run():
             users = os.getenv("TWITTER_RETWEETUSER_USERS").split(',')
             for userId in users:
                 retweet_user(api, userId)
-        # if 'tweetgenerate' in features:
-            # tweetgenerate.main()
+        if 'tweetfile' in features:
+            tweet_file_random(api)
         # if 'retweettag' in features:
             # TODO
         # if 'favmentions' in features:
             # TODO
         # if 'retweetmentions' in features:
             # TODO
-        if 'unfollowinactive' in features:
-            unfollow_inactive(api)
+        # if 'unfollowinactive' in features:
+            # unfollow_inactive(api)
         logger.info("")
     logger.info("End with success.")
 

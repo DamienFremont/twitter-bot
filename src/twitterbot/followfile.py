@@ -3,8 +3,15 @@ import logging
 from twitterbot.config import create_api
 import time
 import os, time, sys
+import shutil
 
 logger = logging.getLogger('twitter')
+
+
+def init_files(api, screen_name, targets):
+    follow_file_write(api, screen_name)
+    for t in targets:
+        shutil.copyfile(f"friends-@{screen_name}.csv", f'followfile-@{t}.csv')
 
 
 def follow_file_write(api, screen_name):
@@ -34,10 +41,10 @@ def follow_file(api, max):
                     break
                 follower = api.get_user(line)
                 if follower != me and not follower.following:
-                        logger.info(f"  Following @{follower.screen_name}")
-                        follower.follow()
-                        count += 1
-                        time.sleep(5)
+                    logger.info(f"  Following @{follower.screen_name}")
+                    follower.follow()
+                    count += 1
+                    time.sleep(5)
                 i += 1
                 delete_line_in_file(file_name, f"{str(line)}")
     except Exception as e:
@@ -59,7 +66,7 @@ def delete_line_in_file(file_name, search_line):
 def main():
     api = create_api()
     max = 21
-    follow_file_following(api, max)
+    follow_file(api, max)
 
 
 if __name__ == "__main__":

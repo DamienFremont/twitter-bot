@@ -1,6 +1,8 @@
 # PROJECT
 config.properties
-*.csv
+followfile-@*.csv
+friends-@*.csv
+tweetfile-@*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

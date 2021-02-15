@@ -37,13 +37,42 @@ stderr_log_handler.setFormatter(formatter)
 logger.setLevel(logging.INFO)
 
 
-def run():
+def init():
     logger.info("")
     logger.info("*****************")
     logger.info("* Twitter Bots  *")
     logger.info("*****************")
     logger.info("")
     config.init()
+
+
+def step_content():
+    logger.info("")
+    logger.info("* Content *******")
+    logger.info("")
+    accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
+    for account in accounts:
+        logger.info(f"Account @{account}")
+        config.switch(account)
+        features = os.getenv("TWITTER_FEATURES").split(',')
+        logger.info(f"Features {features}")
+        api = create_api()
+        if 'tweetfile' in features:
+            tweet_file_random(api)
+        if 'retweetuser' in features:
+            users = os.getenv("TWITTER_RETWEETUSER_USERS").split(',')
+            for userId in users:
+                retweet_user(api, userId)
+        # if 'retweettag' in features:
+            # TODO
+        # if 'retweetmentions' in features:
+            # TODO
+
+
+def step_network():
+    logger.info("")
+    logger.info("* Network *******")
+    logger.info("")
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
         logger.info(f"Account @{account}")
@@ -64,27 +93,19 @@ def run():
         if 'followfile' in features:
             max = 21
             follow_file(api, max)
-        if 'retweetuser' in features:
-            users = os.getenv("TWITTER_RETWEETUSER_USERS").split(',')
-            for userId in users:
-                retweet_user(api, userId)
-        if 'tweetfile' in features:
-            tweet_file_random(api)
-        # if 'retweettag' in features:
-            # TODO
         # if 'favmentions' in features:
-            # TODO
-        # if 'retweetmentions' in features:
             # TODO
         # if 'unfollowinactive' in features:
             # unfollow_inactive(api)
-        logger.info("")
-    logger.info("End with success.")
 
 
 def main():
     # while True:
-    run()
+    init()
+    step_content()
+    step_network()
+    logger.info("")
+    logger.info("End with success.")
     # logger.info("Waiting...")
     # time.sleep(60 * 60)
 

@@ -67,6 +67,7 @@ def step_content():
             # TODO
         # if 'retweetmentions' in features:
             # TODO
+        logger.info("")
 
 
 def step_network():

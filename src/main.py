@@ -98,6 +98,7 @@ def step_network():
             # TODO
         # if 'unfollowinactive' in features:
             # unfollow_inactive(api)
+        logger.info("")
 
 
 def main():

@@ -92,7 +92,7 @@ def step_network():
             for userId in users:
                 follow_friends(api, userId)
         if 'followfile' in features:
-            max = 21
+            max = os.getenv("TWITTER_FOLLOWFILE_MAX", 21)
             follow_file(api, max)
         # if 'favmentions' in features:
             # TODO

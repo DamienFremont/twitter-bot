@@ -55,7 +55,7 @@ def tweet_file(api, file_name):
 
 def main():
     api = create_api()
-    tweet_random_file(api)
+    tweet_file_random(api)
 
 
 if __name__ == "__main__":

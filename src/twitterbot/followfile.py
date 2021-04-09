@@ -28,7 +28,7 @@ def follow_file_write(api, screen_name):
     logger.info(f"{len(friends)} user ids write to file {file_name}")
 
 
-def follow_file(api, max):
+def follow_file(api, max = 9):
     me = api.me()
     file_name = f"followfile-@{me.screen_name}.csv"
     count = 0
@@ -65,7 +65,7 @@ def delete_line_in_file(file_name, search_line):
 
 def main():
     api = create_api()
-    max = 21
+    max = os.getenv("TWITTER_FOLLOWFILE_MAX", 9)
     follow_file(api, max)
 
 

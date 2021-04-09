@@ -83,8 +83,9 @@ def step_network():
         api = create_api()
         if 'favtweet' in features:
             users = os.getenv("TWITTER_FAVUSERTWEET_USERS").split(',')
+            max = os.getenv("TWITTER_FAVUSERTWEET_MAX", 4)
             for userID in users:
-                fav_user_tweet(api, userID)
+                fav_user_tweet(api, userID, max)
         if 'followfollowers' in features:
             follow_followers(api)
         if 'followfriends' in features:
@@ -92,7 +93,7 @@ def step_network():
             for userId in users:
                 follow_friends(api, userId)
         if 'followfile' in features:
-            max = os.getenv("TWITTER_FOLLOWFILE_MAX", 21)
+            max = os.getenv("TWITTER_FOLLOWFILE_MAX", 9)
             follow_file(api, max)
         # if 'favmentions' in features:
             # TODO

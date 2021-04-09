@@ -7,10 +7,10 @@ import time
 logger = logging.getLogger('twitter')
 
 
-def get_last_tweets(api, userID):
+def get_last_tweets(api, userID, max = 4):
     return api.user_timeline(screen_name=userID,
                              # 200 is the maximum allowed count
-                             count=50,
+                             count=max,
                              include_rts=False,
                              # Necessary to keep full_text
                              # otherwise only the first 140 words are extracted
@@ -38,10 +38,10 @@ def on_status(me, tweet):
     return count
 
 
-def fav_user_tweet(api, userID):
+def fav_user_tweet(api, userID, max = 4):
     count = 0
     me = api.me()
-    tweets = get_last_tweets(api, userID)
+    tweets = get_last_tweets(api, userID, max)
     for tweet in tweets:
         count += on_status(me, tweet)
     logger.info(f"{count} tweets liked from @{userID}")
@@ -50,8 +50,9 @@ def fav_user_tweet(api, userID):
 def main():
     api = create_api()
     userID = os.getenv("TWITTER_FAVUSERTWEET_USER")
+    max = os.getenv("TWITTER_FAVUSERTWEET_MAX", 4)
     while True:
-        fav_user_tweet(api, userID)
+        fav_user_tweet(api, userID, max)
         logger.info("Waiting...")
         time.sleep(60)
 

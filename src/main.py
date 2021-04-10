@@ -59,13 +59,34 @@ def step_content():
         api = create_api()
         if 'tweetfile' in features:
             tweet_file_random(api)
+        # if 'retweettag' in features:
+            # TODO
+        # if 'retweetmentions' in features:
+            # TODO
+        logger.info("")
+
+
+def step_promote():
+    logger.info("")
+    logger.info("* Promote *******")
+    logger.info("")
+    accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
+    for account in accounts:
+        logger.info(f"Account @{account}")
+        config.switch(account)
+        features = os.getenv("TWITTER_FEATURES").split(',')
+        logger.info(f"Features {features}")
+        api = create_api()
+        if 'favtweet' in features:
+            users = os.getenv("TWITTER_FAVUSERTWEET_USERS").split(',')
+            max = os.getenv("TWITTER_FAVUSERTWEET_MAX", 4)
+            for userID in users:
+                fav_user_tweet(api, userID, max)
         if 'retweetuser' in features:
             users = os.getenv("TWITTER_RETWEETUSER_USERS").split(',')
             for userId in users:
                 retweet_user(api, userId)
-        # if 'retweettag' in features:
-            # TODO
-        # if 'retweetmentions' in features:
+        # if 'favmentions' in features:
             # TODO
         logger.info("")
 
@@ -81,11 +102,6 @@ def step_network():
         features = os.getenv("TWITTER_FEATURES").split(',')
         logger.info(f"Features {features}")
         api = create_api()
-        if 'favtweet' in features:
-            users = os.getenv("TWITTER_FAVUSERTWEET_USERS").split(',')
-            max = os.getenv("TWITTER_FAVUSERTWEET_MAX", 4)
-            for userID in users:
-                fav_user_tweet(api, userID, max)
         if 'followfollowers' in features:
             follow_followers(api)
         if 'followfriends' in features:
@@ -95,8 +111,6 @@ def step_network():
         if 'followfile' in features:
             max = os.getenv("TWITTER_FOLLOWFILE_MAX", 9)
             follow_file(api, max)
-        # if 'favmentions' in features:
-            # TODO
         # if 'unfollowinactive' in features:
             # unfollow_inactive(api)
         logger.info("")
@@ -106,6 +120,7 @@ def main():
     # while True:
     init()
     step_content()
+    step_promote()
     step_network()
     logger.info("")
     logger.info("End with success.")

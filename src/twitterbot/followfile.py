@@ -33,22 +33,22 @@ def follow_file(api, max = 9):
     file_name = f"followfile-@{me.screen_name}.csv"
     count = 0
     i = 0
-    try:
-        with open(file_name, "r") as file:
-            lines = file.readlines()
-            for line in lines:
-                if i >= max:
-                    break
+    with open(file_name, "r") as file:
+        lines = file.readlines()
+        for line in lines:
+            if i >= max:
+                break
+            try:
                 follower = api.get_user(line)
                 if follower != me and not follower.following:
                     logger.info(f"  Following @{follower.screen_name}")
                     follower.follow()
                     count += 1
                     time.sleep(5)
-                i += 1
-                delete_line_in_file(file_name, f"{str(line)}")
-    except Exception as e:
-        logger.warning(e)
+            except Exception as e:
+                logger.warning(f"  Skip user_id {line}: {e}")
+            i += 1
+            delete_line_in_file(file_name, f"{str(line)}")
     logger.info(f"{count} users followed from file {file_name} ")
     logger.info(f"{i} lines removing from file {file_name} ")
 

@@ -41,25 +41,38 @@ pip install -r requirements.txt --force-reinstall
 ## Usage (main)
 
 ```properties
-# main.properties file
+# .\main.properties file
 
 [Twitter]
-twitter.TWITTER_ACCOUNTS = <YOUR ACCOUNT>
+twitter.TWITTER_ACCOUNTS = <YOUR ACCOUNT NAME>
+twitter.TWITTER_FOLLOWFILE_MAX = 9
+twitter.TWITTER_FAVUSERTWEET_MAX = 4
 
 twitter.<YOUR_ACCOUNT>.TWITTER_CONSUMER_KEY = <...>
 twitter.<YOUR_ACCOUNT>.TWITTER_CONSUMER_SECRET = <...>
 twitter.<YOUR_ACCOUNT>.TWITTER_ACCESS_TOKEN = <...>
 twitter.<YOUR_ACCOUNT>.TWITTER_ACCESS_TOKEN_SECRET = <...>
 
-twitter.<YOUR_ACCOUNT>.TWITTER_FEATURES = favtweet,followfollowers,followfollowing
-twitter.<YOUR_ACCOUNT>.TWITTER_FAVTWEET_USERS = <ANOTHER ACCOUNT>,<ANOTHER ACCOUNT>
-twitter.<YOUR_ACCOUNT>.TWITTER_FOLLOWFOLLOWING_USERS = <ANOTHER ACCOUNT>
+twitter.<YOUR_ACCOUNT>.TWITTER_FEATURES = followfollowers,retweetuser,tweetfile,followfriends,followfile
+twitter.<YOUR_ACCOUNT>.TWITTER_FAVUSERTWEET_USERS = <ANOTHER ACCOUNT>,<ANOTHER ACCOUNT>
+twitter.<YOUR_ACCOUNT>.TWITTER_FOLLOWFRIENDS_USERS = <ANOTHER ACCOUNT>
 ```
 
 ```bash
 $ python .\src\main.py
 ```
 
+you can add more features
+
+```properties
+# .\main.properties file
+
+...
+twitter.<YOUR_ACCOUNT>.TWITTER_FEATURES = favusertweet,followfollowers,retweetuser,tweetfile,followfriends,followfile
+twitter.<YOUR_ACCOUNT>.TWITTER_FAVUSERTWEET_USERS = <ANOTHER ACCOUNT>,<ANOTHER ACCOUNT>
+twitter.<YOUR_ACCOUNT>.TWITTER_FOLLOWFRIENDS_USERS = <ANOTHER ACCOUNT>
+twitter.<YOUR_ACCOUNT>.TWITTER_RETWEETUSER_USERS = EuropaColonyGG
+```
 
 ### More
 

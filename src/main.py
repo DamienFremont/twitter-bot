@@ -77,7 +77,7 @@ def step_promote():
         features = os.getenv("TWITTER_FEATURES").split(',')
         logger.info(f"Features {features}")
         api = create_api()
-        if 'favtweet' in features:
+        if 'favusertweet' in features:
             users = os.getenv("TWITTER_FAVUSERTWEET_USERS").split(',')
             max = os.getenv("TWITTER_FAVUSERTWEET_MAX", 4)
             for userID in users:

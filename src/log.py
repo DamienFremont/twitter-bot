@@ -3,6 +3,7 @@ import datetime
 
 logger = logging.getLogger('twitterbot')
 
+
 def initLogger(logger, appname = "twitterbot", modulename = "twitter"):
 
     LOGGER_PREFIX = f"[{appname}] {modulename} : "

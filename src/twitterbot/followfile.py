@@ -2,10 +2,10 @@ import os
 import logging
 from twitterbot.config import create_api
 import time
-import os, time, sys
-import shutil
+import os, time
 
 logger = logging.getLogger('twitterbot')
+
 
 def keep_unique(array, seens):
     lines_seen = set() # holds lines already seen
@@ -23,11 +23,6 @@ def keep_unique(array, seens):
         array_count += 1
     print(f'keep {keep_count}/{array_count} from {seen_count}')
     return unique
-
-def init_files(api, screen_name, targets):
-    follow_file_write(api, screen_name)
-    for t in targets:
-        shutil.copyfile(f"friends-@{screen_name}.csv", f'twitterbot-followfile-@{t}-following.csv')
 
 
 def follow_file_write(api, screen_name, file_name):
@@ -69,7 +64,7 @@ def follow_file(api, pathname, max = 9):
             i += 1
             delete_line_in_file(file_name, f"{str(line)}")
     logger.info(f"{count} users followed from file {file_name} ")
-    logger.info(f"{i} lines removing from file {file_name} ")
+    logger.info(f"{i} lines removed from file {file_name} ")
 
 
 def delete_line_in_file(file_name, search_line):

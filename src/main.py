@@ -98,7 +98,6 @@ def step_network():
 
 
 def main():
-    # while True:
     init()
     step_content()
     step_promote()

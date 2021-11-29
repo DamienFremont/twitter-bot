@@ -3,7 +3,6 @@ import logging
 import config
 import log
 from twitterbot.config import create_api
-from twitterbot.followfile import init_files
 from twitterbot.followfile import follow_file_write
 
 
@@ -32,7 +31,7 @@ def run():
             file_name = os.getenv("TWITTER_INIT_FEATURES_FOLLOWFILE_PATHNAME")
             logger.info(screen_name)
             follow_file_write(api, screen_name, file_name)
-            logger.info(f" ")
+            logger.info(" ")
 
 
 def main():

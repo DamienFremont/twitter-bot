@@ -11,7 +11,7 @@ logger = logging.getLogger('twitter')
 
 def tweet_file_random(api):
     #  OPEN
-    me = api.me()
+    me = api.verify_credentials()
     folder = f"tweetfile-@{me.screen_name}"
     if not os.path.isdir(folder):
         logger.warning(f"skip tweeting: The system cannot find the folder specified: '{folder}'")
@@ -37,13 +37,22 @@ def tweet_file(api, file_name):
         jpg = file_name.replace(".txt", ".jpg")
         png = file_name.replace(".txt", ".png")
         gif = file_name.replace(".txt", ".gif")
+        mp4 = file_name.replace(".txt", ".mp4")
         # POST
         if os.path.isfile(jpg):
-            api.update_with_media(filename = jpg, status = text) 
+            media_file = jpg
         elif os.path.isfile(png):
-            api.update_with_media(filename = png, status = text) 
+            media_file = jpg
         elif os.path.isfile(gif):
-            api.update_with_media(filename = gif, status = text) 
+            media_file = jpg
+        elif os.path.isfile(mp4):
+            media_file = mp4
+        else:
+            media_file = 'no file'
+        if os.path.isfile(media_file):
+            media = api.media_upload(filename = mp4)
+            media_ids = [ media.media_id_string ]
+            api.update_status(status = text, media_ids = media_ids)
         else:
             api.update_status(status = text)
         count += 1

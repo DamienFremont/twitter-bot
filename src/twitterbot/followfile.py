@@ -29,7 +29,7 @@ def follow_file_write(api, screen_name):
 
 
 def follow_file(api, max = 9):
-    me = api.me()
+    me = api.verify_credentials()
     file_name = f"followfile-@{me.screen_name}.csv"
     count = 0
     i = 0
@@ -39,7 +39,7 @@ def follow_file(api, max = 9):
             if i >= max:
                 break
             try:
-                follower = api.get_user(line)
+                follower = api.get_user(user_id = line)
                 if follower != me and not follower.following:
                     logger.info(f"  Following @{follower.screen_name}")
                     follower.follow()

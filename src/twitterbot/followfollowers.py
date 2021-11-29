@@ -8,7 +8,7 @@ logger = logging.getLogger('twitter')
 def follow_followers(api):
     logger.debug("Retrieving and following followers")
     count = 0
-    me = api.me()
+    me = api.verify_credentials()
     try:
         for follower in api.followers(me.screen_name):
             if not follower.following:

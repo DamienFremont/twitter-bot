@@ -40,7 +40,7 @@ def on_status(me, tweet):
 
 def fav_user_tweet(api, userID, max = 4):
     count = 0
-    me = api.me()
+    me = api.verify_credentials()
     tweets = get_last_tweets(api, userID, max)
     for tweet in tweets:
         count += on_status(me, tweet)

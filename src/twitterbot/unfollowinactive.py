@@ -10,7 +10,7 @@ logger = logging.getLogger('twitter')
 
 def unfollow_inactive(api):
     count = 0
-    me = api.me()
+    me = api.verify_credentials()
     try:
         for page in tweepy.Cursor(api.friends).pages():
             logger.debug(f"  page")

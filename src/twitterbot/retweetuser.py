@@ -40,7 +40,7 @@ def on_status(me, tweet):
 
 def retweet_user(api, userID):
     count = 0
-    me = api.me()
+    me = api.verify_credentials()
     tweets = get_last_tweets(api, userID)
     for tweet in reversed(tweets):
         count += on_status(me, tweet)

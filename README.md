@@ -9,9 +9,39 @@ WORK IN PROGRESS !!!
 
 ![alt text](docs/screenshot-1.png)
 
+---
+
+The source code was adapted from this article: [How to Make a Twitter Bot in Python With Tweepy](https://realpython.com/twitter-bot-python-tweepy/)
+
+---
+
+## Requirements
+
+### Install Python, pip
+
+### Sign up for Twitter Developer Account
+
+- Sign up for a separate account for your Twitter Bot and then apply for Twitter Developer Account following this link https://developer.twitter.com/en/apply-for-access 
+- Enter the necessary details and await for your mail confirmation. Once confirmed, click on Create an App option.
+- Enter the necessary details to generate the secret key and access tokens.
+- Copy the keys and keep them safe.
+
+---
+
+## Getting Started
+
+For all this we will need a Python library called Tweepy for accessing the Twitter API. We can install tweepy in three ways:
+
+```bash
+pip install -r requirements.txt --force-reinstall
+```
+
+---
+
+## Usage (main)
 
 ```properties
-# config.properties file
+# main.properties file
 
 [Twitter]
 twitter.TWITTER_ACCOUNTS = <YOUR ACCOUNT>
@@ -29,9 +59,11 @@ twitter.<YOUR_ACCOUNT>.TWITTER_FOLLOWFOLLOWING_USERS = <ANOTHER ACCOUNT>
 ```bash
 $ python .\src\main.py
 ```
----
 
-The source code was adapted from this article: [How to Make a Twitter Bot in Python With Tweepy](https://realpython.com/twitter-bot-python-tweepy/)
+
+### More
+
+You can use each script in standalone (ex: python tweetfile.py)
 
 To run the bot, you must first create the environment variables for the authentication credentials. You can do this by running this commands from a terminal and replacing the values with your actual credentials:
 
@@ -45,42 +77,6 @@ $ export ACCESS_TOKEN_SECRET="tH9aKQbQQ1iRdYTcLSsPwitl44BkAc6jilrsU0ifnXvZhq"
 Note: This assumes that you’re using Linux or macOS. If you’re using Windows, then the steps might be a little different.
 
 After you run the commands, your environment variables will contain the credentials needed to use the Twitter API.
-
-
----
-
-## Requirements
-
-### Install Python, pip
-
-### Install Tweepy 
-
-For all this we will need a Python library called Tweepy for accessing the Twitter API. We can install tweepy in three ways:
-
-```bash
-$ pip install tweepy
-```
-
-### Sign up for Twitter Developer Account
-
-- Sign up for a separate account for your Twitter Bot and then apply for Twitter Developer Account following this link https://developer.twitter.com/en/apply-for-access 
-- Enter the necessary details and await for your mail confirmation. Once confirmed, click on Create an App option.
-- Enter the necessary details to generate the secret key and access tokens.
-- Copy the keys and keep them safe.
-
----
-
-## Documentation
-
----
-
-## Examples
-
-### Configuration
-
-
-### Deployment
-
 
 ---
 

@@ -4,7 +4,7 @@ import configparser
 
 logger = logging.getLogger()
 config = configparser.RawConfigParser()
-config.read('config.properties')
+config.read('main.properties')
 
 
 def envFromProps(userID, key, required):
@@ -15,7 +15,7 @@ def envFromProps(userID, key, required):
         if required:
             logger.error(f"missing prop key {propKey}")
             logger.debug("you need to :")
-            logger.debug("- fix your config.properties file")
+            logger.debug("- fix your main.properties file")
             os._exit(0)
         os.environ[key] = ''
 

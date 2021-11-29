@@ -1,5 +1,6 @@
 # PROJECT
 config.properties
+main.properties
 followfile-@*.csv
 friends-@*.csv
 tweetfile-@*

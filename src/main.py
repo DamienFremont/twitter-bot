@@ -1,40 +1,19 @@
 import os
 import logging
-import datetime
 import config
+import log
 from twitterbot.config import create_api
-from twitterbot.favusertweet import fav_user_tweet
+from twitterbot.favtweet import fav_tweet
 from twitterbot.followfollowers import follow_followers
 from twitterbot.followfriends import follow_friends
 from twitterbot.followfile import follow_file
 from twitterbot.unfollowinactive import unfollow_inactive
 from twitterbot.retweetuser import retweet_user
 from twitterbot.tweetfile import tweet_file_random
-import time
 
-APP_NAME = "app"
-MODULE_NAME = "twitter"
 
-LOGGER_PREFIX = f"[{APP_NAME}] bots.twitter : "
-DATE_FMT = "%Y%m%d_%H%M%S"
-now = datetime.datetime.now()
-
-logger = logging.getLogger(MODULE_NAME)
-
-file_log_handler = logging.FileHandler(
-    f"logs/{APP_NAME}-{now.strftime(DATE_FMT)}.log")
-logger.addHandler(file_log_handler)
-
-stderr_log_handler = logging.StreamHandler()
-logger.addHandler(stderr_log_handler)
-
-# nice output format
-formatter = logging.Formatter(
-    f'%(asctime)s %(levelname)s {LOGGER_PREFIX} %(message)s')
-file_log_handler.setFormatter(formatter)
-stderr_log_handler.setFormatter(formatter)
-
-logger.setLevel(logging.INFO)
+logger = logging.getLogger('twitterbot')
+log.initLogger(logger, appname='twitterbot', modulename='main')
 
 
 def init():
@@ -58,7 +37,8 @@ def step_content():
         logger.info(f"Features {features}")
         api = create_api()
         if 'tweetfile' in features:
-            tweet_file_random(api)
+            pathname = os.getenv("TWITTER_FEATURES_TWEETFILE_PATHNAME")
+            tweet_file_random(api, pathname)
         # if 'retweettag' in features:
             # TODO
         # if 'retweetmentions' in features:
@@ -77,13 +57,13 @@ def step_promote():
         features = os.getenv("TWITTER_FEATURES").split(',')
         logger.info(f"Features {features}")
         api = create_api()
-        if 'favusertweet' in features:
-            users = os.getenv("TWITTER_FAVUSERTWEET_USERS").split(',')
-            max = os.getenv("TWITTER_FAVUSERTWEET_MAX", 4)
+        if 'favtweet' in features:
+            users = os.getenv("TWITTER_FEATURES_FAVTWEET_USERS").split(',')
+            max = os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4)
             for userID in users:
-                fav_user_tweet(api, userID, max)
+                fav_tweet(api, userID, max)
         if 'retweetuser' in features:
-            users = os.getenv("TWITTER_RETWEETUSER_USERS").split(',')
+            users = os.getenv("TWITTER_FEATURES_RETWEETUSER_USERS").split(',')
             for userId in users:
                 retweet_user(api, userId)
         # if 'favmentions' in features:
@@ -105,12 +85,13 @@ def step_network():
         if 'followfollowers' in features:
             follow_followers(api)
         if 'followfriends' in features:
-            users = os.getenv("TWITTER_FOLLOWFRIENDS_USERS").split(',')
+            users = os.getenv("TWITTER_FEATURES_FOLLOWFRIENDS_USERS").split(',')
             for userId in users:
                 follow_friends(api, userId)
         if 'followfile' in features:
-            max = os.getenv("TWITTER_FOLLOWFILE_MAX", 9)
-            follow_file(api, max)
+            max = os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9)
+            pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
+            follow_file(api, pathname = pathname, max = max)
         # if 'unfollowinactive' in features:
             # unfollow_inactive(api)
         logger.info("")

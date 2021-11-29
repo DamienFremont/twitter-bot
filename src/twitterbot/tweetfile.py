@@ -6,20 +6,19 @@ import random
 import os.path
 import time
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
 
 
-def tweet_file_random(api):
+def tweet_file_random(api, pathname):
     #  OPEN
-    me = api.verify_credentials()
-    folder = f"tweetfile-@{me.screen_name}"
-    if not os.path.isdir(folder):
-        logger.warning(f"skip tweeting: The system cannot find the folder specified: '{folder}'")
+    if not pathname:
+        me = api.verify_credentials()
+        pathname = f"twitterbot-tweetfile-@{me.screen_name}"
+    if not os.path.isdir(pathname):
+        logger.warning(f"skip tweeting: The system cannot find the pathname specified: '{pathname}'")
         return
-    # os.chdir(folder)
     # RANDOM
-    text_ext = "txt"
-    files = glob.glob(f"{folder}/*.txt")
+    files = glob.glob(f"{pathname}/*.txt")
     nb = len(files)
     rn = random.randint(0, nb-1)
     # POST
@@ -31,7 +30,6 @@ def tweet_file_random(api):
 def tweet_file(api, file_name):
     with open(file_name, 'r') as file:
         text = file.read()
-    count = 0
     try:
         # EXT
         jpg = file_name.replace(".txt", ".jpg")
@@ -42,24 +40,21 @@ def tweet_file(api, file_name):
         if os.path.isfile(jpg):
             media_file = jpg
         elif os.path.isfile(png):
-            media_file = jpg
+            media_file = png
         elif os.path.isfile(gif):
-            media_file = jpg
+            media_file = gif
         elif os.path.isfile(mp4):
             media_file = mp4
-        else:
-            media_file = 'no file'
         if os.path.isfile(media_file):
-            media = api.media_upload(filename = mp4)
+            media = api.media_upload(filename = media_file)
             media_ids = [ media.media_id_string ]
             api.update_status(status = text, media_ids = media_ids)
         else:
             api.update_status(status = text)
-        count += 1
+        logger.info(f"1 tweet {file_name} {media_file}")
         time.sleep(5)
     except Exception as e:
         logger.warning(f"error tweeting '{file_name}': {e}")
-    logger.info(f"{count} tweet '{file_name}'")
 
 
 def main():

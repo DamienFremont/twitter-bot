@@ -2,7 +2,7 @@ import tweepy
 import logging
 import os
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
 
 
 def create_api():

@@ -5,7 +5,7 @@ from twitterbot.config import create_api
 import time
 import datetime
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
 
 
 def unfollow_inactive(api):

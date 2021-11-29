@@ -5,32 +5,51 @@ import time
 import os, time, sys
 import shutil
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
 
+def keep_unique(array, seens):
+    lines_seen = set() # holds lines already seen
+    array_count = 0
+    seen_count = 0
+    keep_count = 0
+    for seen in seens:
+        lines_seen.add(seen)
+        seen_count += 1
+    unique = set()
+    for item in array:
+        if item not in lines_seen: # not a duplicate
+            unique.add(item)
+            keep_count += 1
+        array_count += 1
+    print(f'keep {keep_count}/{array_count} from {seen_count}')
+    return unique
 
 def init_files(api, screen_name, targets):
     follow_file_write(api, screen_name)
     for t in targets:
-        shutil.copyfile(f"friends-@{screen_name}.csv", f'followfile-@{t}.csv')
+        shutil.copyfile(f"friends-@{screen_name}.csv", f'twitterbot-followfile-@{t}-following.csv')
 
 
-def follow_file_write(api, screen_name):
-    file_name = f"friends-@{screen_name}.csv"
+def follow_file_write(api, screen_name, file_name):
+    me = api.verify_credentials()
     try:
-        friends = api.friends_ids(screen_name) 
+        yourfriends = api.get_friend_ids(screen_name = screen_name)
+        time.sleep(15)
+        nyfriends = api.get_friend_ids(screen_name = me.screen_name)
+        futurfriends = keep_unique(yourfriends, nyfriends);
         file = open(file_name, 'w')
-        # file.write("user_id\n")
-        for line in friends:
+        for line in futurfriends:
             file.write(f"{str(line)}\n")
         file.close()
+        logger.info(f"{len(futurfriends)} user ids write to file {file_name}")
     except Exception as e:
         logger.warning(e)
-    logger.info(f"{len(friends)} user ids write to file {file_name}")
 
 
-def follow_file(api, max = 9):
-    me = api.verify_credentials()
-    file_name = f"followfile-@{me.screen_name}.csv"
+def follow_file(api, pathname, max = 9):
+    if not pathname:
+        me = api.verify_credentials()
+        file_name = f"twitterbot-followfile-@{me.screen_name}.csv"
     count = 0
     i = 0
     with open(file_name, "r") as file:

@@ -3,7 +3,7 @@ import logging
 from twitterbot.config import create_api
 import time
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
 
 
 def follow_friends(api, userId):
@@ -22,7 +22,7 @@ def follow_friends(api, userId):
 
 def main():
     api = create_api()
-    userId = os.getenv("TWITTER_FOLLOWFRIENDS_USERS")
+    userId = os.getenv("TWITTER_FEATURES_FOLLOWFRIENDS_USERS")
     while True:
         follow_friends(api, userId)
         logger.info("Waiting...")

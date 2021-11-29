@@ -3,8 +3,10 @@ import logging
 import configparser
 
 logger = logging.getLogger()
+
+config_pathname = os.getenv("TWITTERBOT_CONFIG", 'main.properties')
 config = configparser.RawConfigParser()
-config.read('main.properties')
+config.read(config_pathname)
 
 
 def envFromProps(userID, key, required):
@@ -43,6 +45,10 @@ def switch(userID):
     envFromProps(userID, 'TWITTER_ACCESS_TOKEN_SECRET', REQUIRED)
     OPTIONNAL = False
     envFromProps(userID, 'TWITTER_FEATURES', OPTIONNAL)
-    envFromProps(userID, 'TWITTER_FAVUSERTWEET_USERS', OPTIONNAL)
-    envFromProps(userID, 'TWITTER_FOLLOWFRIENDS_USERS', OPTIONNAL)
-    envFromProps(userID, 'TWITTER_RETWEETUSER_USERS', OPTIONNAL)
+    envFromProps(userID, 'TWITTER_FEATURES_FAVTWEET_USERS', OPTIONNAL)
+    envFromProps(userID, 'TWITTER_FEATURES_FOLLOWFRIENDS_USERS', OPTIONNAL)
+    envFromProps(userID, 'TWITTER_FEATURES_RETWEETUSER_USERS', OPTIONNAL)
+
+    envFromProps(userID, 'TWITTER_INIT_FEATURES', OPTIONNAL)
+    envFromProps(userID, 'TWITTER_INIT_FEATURES_FOLLOWFILE_USER', OPTIONNAL)
+    envFromProps(userID, 'TWITTER_INIT_FEATURES_FOLLOWFILE_PATHNAME', OPTIONNAL)

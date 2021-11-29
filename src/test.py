@@ -1,5 +1,6 @@
 import os
 import logging
+import log
 import datetime
 import config
 from twitterbot.config import create_api
@@ -9,7 +10,8 @@ from twitterbot.tweetfile import tweet_file_random
 from twitterbot.tweetfile import tweet_file
 import os
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
+log.initLogger(logger, appname='twitterbot', modulename='test')
 
 def run():
     logger.info("")
@@ -25,7 +27,9 @@ def run():
     # 
     # follow_file(api, 21)
     # 
-    tweet_file_random(api)
+    max = os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9)
+    pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
+    follow_file(api, pathname = pathname, max = max)
     # 
     # tweet_file(api, f"tweetfile-@{account}/txt.txt")
     # tweet_file(api, f"tweetfile-@{account}/jpg.txt")

@@ -2,7 +2,7 @@ import logging
 from twitterbot.config import create_api
 import time
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
 
 
 def follow_followers(api):

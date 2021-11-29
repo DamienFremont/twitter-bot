@@ -38,43 +38,91 @@ pip install -r requirements.txt --force-reinstall
 
 ---
 
-## Usage (main)
+## Usage
 
 ```properties
 # .\main.properties file
 
 [Twitter]
-twitter.TWITTER_ACCOUNTS = <YOUR ACCOUNT NAME>
-twitter.TWITTER_FOLLOWFILE_MAX = 9
-twitter.TWITTER_FAVUSERTWEET_MAX = 4
-
-twitter.<YOUR_ACCOUNT>.TWITTER_CONSUMER_KEY = <...>
-twitter.<YOUR_ACCOUNT>.TWITTER_CONSUMER_SECRET = <...>
-twitter.<YOUR_ACCOUNT>.TWITTER_ACCESS_TOKEN = <...>
-twitter.<YOUR_ACCOUNT>.TWITTER_ACCESS_TOKEN_SECRET = <...>
-
-twitter.<YOUR_ACCOUNT>.TWITTER_FEATURES = followfollowers,retweetuser,tweetfile,followfriends,followfile
-twitter.<YOUR_ACCOUNT>.TWITTER_FAVUSERTWEET_USERS = <ANOTHER ACCOUNT>,<ANOTHER ACCOUNT>
-twitter.<YOUR_ACCOUNT>.TWITTER_FOLLOWFRIENDS_USERS = <ANOTHER ACCOUNT>
+twitter.TWITTER_ACCOUNTS = <ACCOUNT_1>,<ACCOUNT_2>
+# @<ACCOUNT_1>
+twitter.<ACCOUNT_1>.TWITTER_CONSUMER_KEY = opcOqjVo**************
+twitter.<ACCOUNT_1>.TWITTER_CONSUMER_SECRET = X27ePBXCb**************
+twitter.<ACCOUNT_1>.TWITTER_BEARER_TOKEN = AAAAAAAAAAAAAA**************
+twitter.<ACCOUNT_1>.TWITTER_ACCESS_TOKEN = 873278**************
+twitter.<ACCOUNT_1>.TWITTER_ACCESS_TOKEN_SECRET = yg0c9t**************
+...
+twitter.<ACCOUNT_1>.TWITTER_FEATURES = ...<FEATURE_1>,<FEATURE_2>
+...
+twitter.<ACCOUNT_1>.TWITTER_FEATURES_<FEATURE_1>_<OPTION> = ...
+twitter.<ACCOUNT_1>.TWITTER_FEATURES_<FEATURE_2>_<OPTION> = ...
+...
+# @<ACCOUNT_2>
+twitter.<ACCOUNT_2>.TWITTER_CONSUMER_KEY = opcOqjVo**************
 ```
 
 ```bash
 $ python .\src\main.py
 ```
 
-you can add more features
+## Example (single account)
 
 ```properties
 # .\main.properties file
 
-...
-twitter.<YOUR_ACCOUNT>.TWITTER_FEATURES = favusertweet,followfollowers,retweetuser,tweetfile,followfriends,followfile
-twitter.<YOUR_ACCOUNT>.TWITTER_FAVUSERTWEET_USERS = <ANOTHER ACCOUNT>,<ANOTHER ACCOUNT>
-twitter.<YOUR_ACCOUNT>.TWITTER_FOLLOWFRIENDS_USERS = <ANOTHER ACCOUNT>
-twitter.<YOUR_ACCOUNT>.TWITTER_RETWEETUSER_USERS = EuropaColonyGG
+[Twitter]
+twitter.TWITTER_ACCOUNTS = DFremontGameDev
+
+# @DFremontGameDev
+twitter.DFremontGameDev.TWITTER_CONSUMER_KEY = opcOqjVo**************
+twitter.DFremontGameDev.TWITTER_CONSUMER_SECRET = X27ePBXCb**************
+twitter.DFremontGameDev.TWITTER_BEARER_TOKEN = AAAAAAAAAAAAAA**************
+twitter.DFremontGameDev.TWITTER_ACCESS_TOKEN = 873278**************
+twitter.DFremontGameDev.TWITTER_ACCESS_TOKEN_SECRET = yg0c9t**************
+twitter.DFremontGameDev.TWITTER_FEATURES = followfollowers
 ```
 
-### More
+```bash
+$ python .\src\main.py
+```
+
+## Example (multiple accounts)
+
+```properties
+# .\main.properties file
+
+[Twitter]
+twitter.TWITTER_ACCOUNTS = DFremontGameDev,Cars2048
+
+# @DFremontGameDev
+twitter.DFremontGameDev.TWITTER_CONSUMER_KEY = opcOqjVo**************
+...
+# @Cars2048
+twitter.Cars2048.TWITTER_CONSUMER_KEY = k1XBM**************
+...
+```
+
+```bash
+$ python .\src\main.py
+```
+
+## Example (more features)
+
+```properties
+# .\main.properties file
+...
+twitter.TWITTER_FEATURES_FAVTWEET_MAX = 4
+...
+twitter.DFremontGameDev.TWITTER_FEATURES = ...,favtweet,followfriends,retweetuser,tweetfile,followfile
+twitter.DFremontGameDev.TWITTER_FEATURES_FAVTWEET_USERS = Cars2048,Damien_Fremont
+twitter.DFremontGameDev.TWITTER_FEATURES_FOLLOWFRIENDS_USERS = Damien_Fremont
+twitter.DFremontGameDev.TWITTER_FEATURES_RETWEETUSER_USERS = Damien_Fremont
+twitter.DFremontGameDev.TWITTER_FEATURES_TWEETFILE_PATHNAME = .\tweetfile-@DFremontGameDev
+twitter.DFremontGameDev.TWITTER_FEATURES_FOLLOWFILE_PATHNAME = .\followfile-@DFremontGameDev
+
+```
+
+## Standalone Scripts
 
 You can use each script in standalone (ex: python tweetfile.py)
 

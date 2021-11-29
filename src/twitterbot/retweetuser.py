@@ -4,7 +4,7 @@ from twitterbot.config import create_api
 import json
 import time
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
 
 
 def get_last_tweets(api, userID):

@@ -3,9 +3,8 @@
 # PROJECT
 config.properties
 main.properties
-followfile-@*.csv
-friends-@*.csv
-tweetfile-@*
+twitterbot-*.csv
+twitterbot-tweetfile-*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

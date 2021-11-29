@@ -4,7 +4,7 @@ from twitterbot.config import create_api
 import json
 import time
 
-logger = logging.getLogger('twitter')
+logger = logging.getLogger('twitterbot')
 
 
 def get_last_tweets(api, userID, max = 4):
@@ -38,7 +38,7 @@ def on_status(me, tweet):
     return count
 
 
-def fav_user_tweet(api, userID, max = 4):
+def fav_tweet(api, userID, max = 4):
     count = 0
     me = api.verify_credentials()
     tweets = get_last_tweets(api, userID, max)
@@ -49,8 +49,8 @@ def fav_user_tweet(api, userID, max = 4):
 
 def main():
     api = create_api()
-    userID = os.getenv("TWITTER_FAVUSERTWEET_USER")
-    max = os.getenv("TWITTER_FAVUSERTWEET_MAX", 4)
+    userID = os.getenv("TWITTER_FAVTWEET_USER")
+    max = os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4)
     while True:
         fav_user_tweet(api, userID, max)
         logger.info("Waiting...")

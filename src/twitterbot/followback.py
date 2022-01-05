@@ -7,8 +7,8 @@ import os
 
 logger = logging.getLogger('twitterbot')
 
-def follow_followers(api):
-    """follow_followers(api)
+def follow_back(api):
+    """follow_back(api)
     
     Follow back. For authenticated user.
 
@@ -22,7 +22,7 @@ def follow_followers(api):
     (void)
     """
     logger.debug("Retrieving and following followers")
-    pageSize = int(os.getenv("TWITTER_FEATURES_FOLLOWFOLLOWERS_MAX", 10))
+    pageSize = int(os.getenv("TWITTER_FEATURES_FOLLOWBACK_MAX", 10))
     count = 0
     me = api.verify_credentials()
     try:
@@ -45,7 +45,7 @@ def follow_followers(api):
 def main():
     api = create_api()
     while True:
-        follow_followers(api)
+        follow_back(api)
         logger.info("Waiting...")
         time.sleep(60)
 

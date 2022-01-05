@@ -4,7 +4,7 @@ import config
 import log
 from twitterbot.config import create_api
 from twitterbot.favtweet import fav_tweet
-from twitterbot.followfollowers import follow_followers
+from twitterbot.followback import follow_back
 from twitterbot.followfriends import follow_friends
 from twitterbot.followfile import follow_file
 from twitterbot.unfollowinactive import unfollow_inactive
@@ -90,8 +90,8 @@ def step_network():
             users = os.getenv("TWITTER_FEATURES_FOLLOWFRIENDS_USERS").split(',')
             for userId in users:
                 follow_friends(api, userId)
-        if 'followfollowers' in features:
-            follow_followers(api)
+        if 'followback' in features:
+            follow_back(api)
         # if 'unfollowinactive' in features:
             # unfollow_inactive(api)
         logger.info("")

@@ -26,7 +26,7 @@ def init():
     os.environ["TWITTER_ACCOUNTS"] = config.get('Twitter', 'twitter.TWITTER_ACCOUNTS')
     os.environ["TWITTER_FEATURES_FOLLOWFILE_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FOLLOWFILE_MAX')
     os.environ["TWITTER_FEATURES_FAVTWEET_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FAVTWEET_MAX')
-    os.environ["TWITTER_FEATURES_FOLLOWFOLLOWERS_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FOLLOWFOLLOWERS_MAX')
+    os.environ["TWITTER_FEATURES_FOLLOWBACK_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FOLLOWBACK_MAX')
 
 
 def switch(userID):

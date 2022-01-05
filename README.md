@@ -79,7 +79,7 @@ twitter.DFremontGameDev.TWITTER_CONSUMER_SECRET = X27ePBXCb**************
 twitter.DFremontGameDev.TWITTER_BEARER_TOKEN = AAAAAAAAAAAAAA**************
 twitter.DFremontGameDev.TWITTER_ACCESS_TOKEN = 873278**************
 twitter.DFremontGameDev.TWITTER_ACCESS_TOKEN_SECRET = yg0c9t**************
-twitter.DFremontGameDev.TWITTER_FEATURES = followfollowers
+twitter.DFremontGameDev.TWITTER_FEATURES = followback
 ```
 
 ```bash
@@ -113,7 +113,7 @@ $ python .\src\main.py
 ...
 twitter.TWITTER_FEATURES_FOLLOWFILE_MAX = 9
 twitter.TWITTER_FEATURES_FAVTWEET_MAX = 4
-twitter.TWITTER_FEATURES_FOLLOWFOLLOWERS_MAX = 100
+twitter.TWITTER_FEATURES_FOLLOWBACK_MAX = 100
 ...
 twitter.DFremontGameDev.TWITTER_FEATURES = ...,favtweet,followfriends,retweetuser,tweetfile,followfile
 twitter.DFremontGameDev.TWITTER_FEATURES_FAVTWEET_USERS = Cars2048,Damien_Fremont

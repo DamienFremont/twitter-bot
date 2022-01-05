@@ -19,14 +19,16 @@ def run():
     logger.info("*****************")
     logger.info("")
     config.init()
-    account = 'EuropaColonyGG'
+    account = 'DFremontGameDev'
     logger.info(f"Account @{account}")
     config.switch(account)
     api = create_api()
     # TO TEST:
-    max = os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9)
-    pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
-    follow_file(api, pathname = pathname, max = max)
+    #
+    # max = int(os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9))
+    # pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
+    # follow_file(api, pathname = pathname, max = max)
+    #
 
 
 def main():

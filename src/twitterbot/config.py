@@ -19,5 +19,12 @@ def create_api():
     except Exception as e:
         logger.error(f"Error creating session", exc_info=True)
         raise e
-    logger.info(f"Session created")
+    logger.info(f"Session created (API v1)")
+    return api
+
+def create_client():
+    bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
+    api = tweepy.Client(bearer_token,
+                     wait_on_rate_limit=False)
+    logger.info(f"Session created (API v2)")
     return api

@@ -16,7 +16,7 @@ def follow_friends(api, userId):
                 count += 1
                 time.sleep(5)
     except Exception as e:
-        logger.warning(f"Rate limit exceeded")
+        logger.warning(e)
     logger.info(f"{count} friends followed from @{userId}")
 
 

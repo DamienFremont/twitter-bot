@@ -59,9 +59,9 @@ def step_promote():
         api = create_api()
         if 'favtweet' in features:
             users = os.getenv("TWITTER_FEATURES_FAVTWEET_USERS").split(',')
-            max = os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4)
+            max = int(os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4))
             for userID in users:
-                fav_tweet(api, userID, max)
+                fav_tweet(api, userID)
         if 'retweetuser' in features:
             users = os.getenv("TWITTER_FEATURES_RETWEETUSER_USERS").split(',')
             for userId in users:
@@ -82,16 +82,16 @@ def step_network():
         features = os.getenv("TWITTER_FEATURES").split(',')
         logger.info(f"Features {features}")
         api = create_api()
-        if 'followfollowers' in features:
-            follow_followers(api)
+        if 'followfile' in features:
+            max = int(os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9))
+            pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
+            follow_file(api, pathname = pathname, max = max)
         if 'followfriends' in features:
             users = os.getenv("TWITTER_FEATURES_FOLLOWFRIENDS_USERS").split(',')
             for userId in users:
                 follow_friends(api, userId)
-        if 'followfile' in features:
-            max = os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9)
-            pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
-            follow_file(api, pathname = pathname, max = max)
+        if 'followfollowers' in features:
+            follow_followers(api)
         # if 'unfollowinactive' in features:
             # unfollow_inactive(api)
         logger.info("")

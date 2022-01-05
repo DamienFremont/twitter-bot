@@ -111,7 +111,9 @@ $ python .\src\main.py
 ```properties
 # .\main.properties file
 ...
+twitter.TWITTER_FEATURES_FOLLOWFILE_MAX = 9
 twitter.TWITTER_FEATURES_FAVTWEET_MAX = 4
+twitter.TWITTER_FEATURES_FOLLOWFOLLOWERS_MAX = 100
 ...
 twitter.DFremontGameDev.TWITTER_FEATURES = ...,favtweet,followfriends,retweetuser,tweetfile,followfile
 twitter.DFremontGameDev.TWITTER_FEATURES_FAVTWEET_USERS = Cars2048,Damien_Fremont

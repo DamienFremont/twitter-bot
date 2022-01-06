@@ -1,14 +1,10 @@
 import os
-import logging
+import logging, log
 import config
-import log
-from twitterbot.config import create_api
-from twitterbot.followfile import follow_file_write
-
+import twitterbot
 
 logger = logging.getLogger('twitterbot')
 log.initLogger(logger, appname='twitterbot', modulename='init')
-
 
 def run():
     logger.info("")
@@ -24,19 +20,17 @@ def run():
         features = os.getenv("TWITTER_INIT_FEATURES").split(',')
         if features == ['']:
             continue
-        api = create_api()
+        api = twitterbot.initapi()
         logger.info(f"Features {features}")
         if 'followfile' in features:
             screen_name = os.getenv("TWITTER_INIT_FEATURES_FOLLOWFILE_USER")
             file_name = os.getenv("TWITTER_INIT_FEATURES_FOLLOWFILE_PATHNAME")
             logger.info(screen_name)
-            follow_file_write(api, screen_name, file_name)
+            twitterbot.writefollowfile(api, screen_name, file_name)
             logger.info(" ")
-
 
 def main():
     run()
-
 
 if __name__ == "__main__":
     main()

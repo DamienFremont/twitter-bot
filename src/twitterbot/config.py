@@ -4,8 +4,7 @@ import os
 
 logger = logging.getLogger('twitterbot')
 
-
-def create_api():
+def initapi():
     consumer_key = os.getenv("TWITTER_CONSUMER_KEY")
     consumer_secret = os.getenv("TWITTER_CONSUMER_SECRET")
     access_token = os.getenv("TWITTER_ACCESS_TOKEN")
@@ -22,7 +21,7 @@ def create_api():
     logger.info(f"Session created (API v1)")
     return api
 
-def create_client():
+def initclient():
     bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
     api = tweepy.Client(bearer_token,
                      wait_on_rate_limit=False)

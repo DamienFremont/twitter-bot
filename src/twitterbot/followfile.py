@@ -1,11 +1,10 @@
 import os
 import logging
-from twitterbot.config import create_api
+from twitterbot.config import initapi
 import time
 import os, time
 
 logger = logging.getLogger('twitterbot')
-
 
 def keep_unique(array, seens):
     lines_seen = set() # holds lines already seen
@@ -24,8 +23,7 @@ def keep_unique(array, seens):
     print(f'keep {keep_count}/{array_count} from {seen_count}')
     return unique
 
-
-def follow_file_write(api, screen_name, file_name):
+def writefollowfile(api, screen_name, file_name):
     me = api.verify_credentials()
     try:
         yourfriends = api.get_friend_ids(screen_name = screen_name)
@@ -40,8 +38,7 @@ def follow_file_write(api, screen_name, file_name):
     except Exception as e:
         logger.warning(e)
 
-
-def follow_file(api, pathname, max = 9):
+def followfile(api, pathname, max = 9):
     if not pathname:
         me = api.verify_credentials()
         file_name = f"twitterbot-followfile-@{me.screen_name}.csv"
@@ -66,7 +63,6 @@ def follow_file(api, pathname, max = 9):
     logger.info(f"{count} users followed from file {file_name} ")
     logger.info(f"{i} lines removed from file {file_name} ")
 
-
 def delete_line_in_file(file_name, search_line):
     with open(file_name, "r+") as f:
         d = f.readlines()
@@ -76,12 +72,10 @@ def delete_line_in_file(file_name, search_line):
                 f.write(i)
         f.truncate()
 
-
 def main():
-    api = create_api()
+    api = initapi()
     max = os.getenv("TWITTER_FOLLOWFILE_MAX", 9)
-    follow_file(api, max)
-
+    followfile(api, max)
 
 if __name__ == "__main__":
     main()

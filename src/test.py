@@ -1,16 +1,10 @@
 import os
-import logging
-import log
+import logging, log
 import config
-from twitterbot.config import create_api
-from twitterbot.followfile import follow_file
-from twitterbot.tweetfile import tweet_file_random
-from twitterbot.tweetfile import tweet_file
-import os
+import twitterbot
 
 logger = logging.getLogger('twitterbot')
 log.initLogger(logger, appname='twitterbot', modulename='test')
-
 
 def run():
     logger.info("")
@@ -22,18 +16,16 @@ def run():
     account = 'DFremontGameDev'
     logger.info(f"Account @{account}")
     config.switch(account)
-    api = create_api()
+    api = twitterbot.initapi()
     # TO TEST:
     #
     # max = int(os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9))
     # pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
-    # follow_file(api, pathname = pathname, max = max)
+    # twitterbot.followfile(api, pathname = pathname, max = max)
     #
-
 
 def main():
     run()
-
 
 if __name__ == "__main__":
     main()

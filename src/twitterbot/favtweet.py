@@ -1,11 +1,10 @@
 import os
 import logging
-from twitterbot.config import create_api
+from twitterbot.config import initapi
 import json
 import time
 
 logger = logging.getLogger('twitterbot')
-
 
 def get_last_tweets(api, userID, max = 4):
     return api.user_timeline(screen_name=userID,
@@ -16,7 +15,6 @@ def get_last_tweets(api, userID, max = 4):
                              # otherwise only the first 140 words are extracted
                              tweet_mode='extended'
                              )
-
 
 def on_status(me, tweet):
     count = 0
@@ -37,8 +35,7 @@ def on_status(me, tweet):
                 f"Error on like tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
     return count
 
-
-def fav_tweet(api, userID, max = 4):
+def favtweet(api, userID, max = 4):
     count = 0
     me = api.verify_credentials()
     tweets = get_last_tweets(api, userID, max)
@@ -46,16 +43,14 @@ def fav_tweet(api, userID, max = 4):
         count += on_status(me, tweet)
     logger.info(f"{count} tweets liked from @{userID}")
 
-
 def main():
-    api = create_api()
+    api = initapi()
     userID = os.getenv("TWITTER_FAVTWEET_USER")
     max = os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4)
     while True:
         fav_user_tweet(api, userID, max)
         logger.info("Waiting...")
         time.sleep(60)
-
 
 if __name__ == "__main__":
     main()

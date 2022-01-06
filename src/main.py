@@ -1,14 +1,7 @@
 import sys, os, glob, getopt
 import logging
 import config, log
-from twitterbot.config import create_api
-from twitterbot.favtweet import fav_tweet
-from twitterbot.followback import follow_back
-from twitterbot.followfriends import follow_friends
-from twitterbot.followfile import follow_file
-from twitterbot.unfollowinactive import unfollow_inactive
-from twitterbot.retweetuser import retweet_user
-from twitterbot.tweetfile import tweet_file_random
+import twitterbot
 
 logger = logging.getLogger('twitterbot')
 log.initLogger(logger, appname='twitterbot', modulename='main')
@@ -36,7 +29,7 @@ def istrue(str):
 def init():
     logger.info("")
     logger.info("*****************")
-    logger.info("* Twitter Bots  *")
+    logger.info("* Twitter Bot   *")
     logger.info("*****************")
     logger.info("")
     config.init()
@@ -51,10 +44,10 @@ def step_content():
         config.switch(account)
         features = os.getenv("TWITTER_FEATURES").split(',')
         logger.info(f"Features {features}")
-        api = create_api()
+        api = twitterbot.initapi()
         if 'tweetfile' in features:
             pathname = os.getenv("TWITTER_FEATURES_TWEETFILE_PATHNAME")
-            tweet_file_random(api, pathname)
+            twitterbot.tweetfilerandom(api, pathname)
         # if 'retweettag' in features:
             # TODO
         # if 'retweetmentions' in features:
@@ -71,17 +64,19 @@ def step_promote():
         config.switch(account)
         features = os.getenv("TWITTER_FEATURES").split(',')
         logger.info(f"Features {features}")
-        api = create_api()
+        api = twitterbot.initapi()
         if 'favtweet' in features:
             users = os.getenv("TWITTER_FEATURES_FAVTWEET_USERS").split(',')
             max = int(os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4))
             for userID in users:
-                fav_tweet(api, userID)
+                twitterbot.favtweet(api, userID)
         if 'retweetuser' in features:
             users = os.getenv("TWITTER_FEATURES_RETWEETUSER_USERS").split(',')
             for userId in users:
-                retweet_user(api, userId)
+                twitterbot.retweetuser(api, userId)
         # if 'favmentions' in features:
+            # TODO
+        # if 'reply' in features:
             # TODO
         logger.info("")
 
@@ -95,19 +90,19 @@ def step_network():
         config.switch(account)
         features = os.getenv("TWITTER_FEATURES").split(',')
         logger.info(f"Features {features}")
-        api = create_api()
+        api = twitterbot.initapi()
         if 'followfile' in features:
             max = int(os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9))
             pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
-            follow_file(api, pathname = pathname, max = max)
+            twitterbot.followfile(api, pathname = pathname, max = max)
         if 'followfriends' in features:
             users = os.getenv("TWITTER_FEATURES_FOLLOWFRIENDS_USERS").split(',')
             for userId in users:
-                follow_friends(api, userId)
+                twitterbot.followfriends(api, userId)
         if 'followback' in features:
-            follow_back(api)
+            twitterbot.followback(api)
         # if 'unfollowinactive' in features:
-            # unfollow_inactive(api)
+            # TODO unfollowinactive(api)
         logger.info("")
 
 # https://www.tutorialspoint.com/python/python_command_line_arguments.htm

@@ -1,6 +1,6 @@
 import os
 import logging
-from twitterbot.config import create_api
+from twitterbot.config import initapi
 import glob
 import random
 import os.path
@@ -8,8 +8,7 @@ import time
 
 logger = logging.getLogger('twitterbot')
 
-
-def tweet_file_random(api, pathname):
+def tweetfilerandom(api, pathname):
     #  OPEN
     if not pathname:
         me = api.verify_credentials()
@@ -24,10 +23,9 @@ def tweet_file_random(api, pathname):
     # POST
     # os.chdir("..")
     file_name = files[rn]
-    tweet_file(api, file_name)
+    tweetfile(api, file_name)
 
-
-def tweet_file(api, file_name):
+def tweetfile(api, file_name):
     with open(file_name, 'r') as file:
         text = file.read()
     try:
@@ -56,11 +54,9 @@ def tweet_file(api, file_name):
     except Exception as e:
         logger.warning(f"error tweeting '{file_name}': {e}")
 
-
 def main():
-    api = create_api()
-    tweet_file_random(api)
-
+    api = initapi()
+    tweetfilerandom(api)
 
 if __name__ == "__main__":
     main()

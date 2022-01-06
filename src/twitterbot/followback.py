@@ -1,5 +1,5 @@
 import logging
-from twitterbot.config import create_api
+from twitterbot.config import initapi
 import time
 import tweepy
 from math import *
@@ -7,8 +7,8 @@ import os
 
 logger = logging.getLogger('twitterbot')
 
-def follow_back(api):
-    """follow_back(api)
+def followback(api):
+    """followback(api)
     
     Follow back. For authenticated user.
 
@@ -40,12 +40,12 @@ def follow_back(api):
             time.sleep(5)
     except Exception as e:
         logger.warning(e)         
-    logger.info(f"{count} follow todo for last {pageSize} followers")
+    logger.info(f"{count} follow from last {pageSize} followers")
 
 def main():
-    api = create_api()
+    api = initapi()
     while True:
-        follow_back(api)
+        followback(api)
         logger.info("Waiting...")
         time.sleep(60)
 

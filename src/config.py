@@ -8,7 +8,6 @@ config_pathname = os.getenv("TWITTERBOT_CONFIG", 'main.properties')
 config = configparser.RawConfigParser()
 config.read(config_pathname)
 
-
 def envFromProps(userID, key, required):
     propKey = f'twitter.{userID}.{key}'
     try:
@@ -21,13 +20,11 @@ def envFromProps(userID, key, required):
             os._exit(0)
         os.environ[key] = ''
 
-
 def init():
     os.environ["TWITTER_ACCOUNTS"] = config.get('Twitter', 'twitter.TWITTER_ACCOUNTS')
     os.environ["TWITTER_FEATURES_FOLLOWFILE_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FOLLOWFILE_MAX')
     os.environ["TWITTER_FEATURES_FAVTWEET_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FAVTWEET_MAX')
     os.environ["TWITTER_FEATURES_FOLLOWBACK_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FOLLOWBACK_MAX')
-
 
 def switch(userID):
     accounts = config.get('Twitter', 'twitter.TWITTER_ACCOUNTS').split(',')

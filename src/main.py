@@ -1,7 +1,6 @@
-import os
+import sys, os, glob, getopt
 import logging
-import config
-import log
+import config, log
 from twitterbot.config import create_api
 from twitterbot.favtweet import fav_tweet
 from twitterbot.followback import follow_back
@@ -11,10 +10,28 @@ from twitterbot.unfollowinactive import unfollow_inactive
 from twitterbot.retweetuser import retweet_user
 from twitterbot.tweetfile import tweet_file_random
 
-
 logger = logging.getLogger('twitterbot')
 log.initLogger(logger, appname='twitterbot', modulename='main')
 
+def main(argv):
+    argdic = getargs(argv, [
+        { 'opt':'create',  'defarg':'False' },
+        { 'opt':'promote', 'defarg':'False' },
+        { 'opt':'network', 'defarg':'False' } ])
+    init()
+    if istrue(argdic.get('create')):
+        step_content()
+    if istrue(argdic.get('promote')):
+        step_promote()
+    if istrue(argdic.get('network')):
+        step_network()
+    logger.info("")
+    logger.info("End with success.")
+    # logger.info("Waiting...")
+    # time.sleep(60 * 60)
+
+def istrue(str):
+    return str in ('TRUE', 'True', 'true', '1')
 
 def init():
     logger.info("")
@@ -23,7 +40,6 @@ def init():
     logger.info("*****************")
     logger.info("")
     config.init()
-
 
 def step_content():
     logger.info("")
@@ -44,7 +60,6 @@ def step_content():
         # if 'retweetmentions' in features:
             # TODO
         logger.info("")
-
 
 def step_promote():
     logger.info("")
@@ -69,7 +84,6 @@ def step_promote():
         # if 'favmentions' in features:
             # TODO
         logger.info("")
-
 
 def step_network():
     logger.info("")
@@ -96,17 +110,79 @@ def step_network():
             # unfollow_inactive(api)
         logger.info("")
 
+# https://www.tutorialspoint.com/python/python_command_line_arguments.htm
+def getargs(argv, configs, helpmsg=None):
+    """getargs(argv, configs, helpmsg)
+    
+    Return dictionnary with long opt names as keys and arg as values. 
+    From Reading command line arguments, using short or long opt names with default values from configs object.
 
-def main():
-    init()
-    step_content()
-    step_promote()
-    step_network()
-    logger.info("")
-    logger.info("End with success.")
-    # logger.info("Waiting...")
-    # time.sleep(60 * 60)
+    Parameters
+    ----------
+    argv
+        |sys.argv[1:]|
+    configs
+        |array<dictionnary['opt':str,'shortopt':str,'longopt':str,'defarg':str]>|
+        example : [{'opt':'myopt'},...] or [{'shortopt':'mo','longopt':'myopt','defarg':'False'},...]
+    helpmsg
+        |str(optionnal)|
+        example : 'python myscript.py -m <myopt>'
 
+    Returns
+    -------
+    dictionnary[key(longopt):str(arg or defarg)]
+
+    Usage
+    -----
+    argv = sys.argv[1:]
+
+    helpmsg = 'python myscript.py -m <myopt>'
+
+    configs = [{ 'opt':'myopt', 'defarg':'False' } ]
+
+    argdic = getargs(argv, configs, helpmsg)
+
+    myoptarg = argdic.get('myopt')
+    """
+    shortopts = "h"
+    longopts = []
+    defhelpmsg = 'Usage: python [script].py'
+    for conf in configs:
+        # DEF VALS
+        if not 'longopt' in conf.keys():
+            conf['longopt'] = conf['opt']
+        if not 'shortopt' in conf.keys():
+            conf['shortopt'] = conf['longopt'][0]
+        if not 'defarg' in conf.keys():
+            conf['defarg'] = None
+        # BUILD PARAMS
+        shortopts += f"{conf['shortopt']}:"
+        longopts.append(f"{conf['longopt']}=")
+        defhelpmsg += f" --{conf['longopt']} <{conf['defarg']}>"
+    help = defhelpmsg if helpmsg is None else helpmsg
+    # READ OPT
+    try:
+        opts, args = getopt.getopt(argv,shortopts,longopts)
+    except getopt.GetoptError:
+        print(help)
+        sys.exit(2)
+    # GET ARGS
+    res = {}
+    for opt, arg in opts:
+        if opt == '-h':
+            print(help)
+            sys.exit()
+        else:
+            for conf in configs:
+                if opt in (f"-{conf['shortopt']}", f"--{conf['longopt']}"):
+                    res[conf['longopt']] = arg
+                    continue
+    # DEFAULT ARGS
+    for conf in configs:
+        if not conf['longopt'] in res.keys():
+            res[conf['longopt']] = conf['defarg']
+        print(f"argument --{conf['longopt']}: '{res[conf['longopt']]}'")
+    return res
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

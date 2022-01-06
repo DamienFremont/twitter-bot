@@ -8,16 +8,16 @@ log.initLogger(logger, appname='twitterbot', modulename='main')
 
 def main(argv):
     argdic = getargs(argv, [
-        { 'opt':'create',  'defarg':'False' },
-        { 'opt':'promote', 'defarg':'False' },
-        { 'opt':'network', 'defarg':'False' } ])
+        { 'opt':'create',  'defarg':'true' },
+        { 'opt':'promote', 'defarg':'true' },
+        { 'opt':'network', 'defarg':'true' } ])
     init()
     if istrue(argdic.get('create')):
-        step_content()
+        contentstep()
     if istrue(argdic.get('promote')):
-        step_promote()
+        promotestep()
     if istrue(argdic.get('network')):
-        step_network()
+        networkstep()
     logger.info("")
     logger.info("End with success.")
     # logger.info("Waiting...")
@@ -34,7 +34,7 @@ def init():
     logger.info("")
     config.init()
 
-def step_content():
+def contentstep():
     logger.info("")
     logger.info("* Content *******")
     logger.info("")
@@ -54,7 +54,7 @@ def step_content():
             # TODO
         logger.info("")
 
-def step_promote():
+def promotestep():
     logger.info("")
     logger.info("* Promote *******")
     logger.info("")
@@ -76,11 +76,13 @@ def step_promote():
                 twitterbot.retweetuser(api, userId)
         # if 'favmentions' in features:
             # TODO
-        # if 'reply' in features:
+        # if 'replymessage' in features:
+            # TODO
+        # if 'replyfollow' in features:
             # TODO
         logger.info("")
 
-def step_network():
+def networkstep():
     logger.info("")
     logger.info("* Network *******")
     logger.info("")

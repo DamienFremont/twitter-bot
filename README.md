@@ -40,6 +40,27 @@ pip install -r requirements.txt --force-reinstall
 
 ## Usage
 
+### Command
+
+```bash
+python .\src\main.py
+```
+or
+```bash
+python .\src\main.py --create <true|false> --promote <true|false> --network <true|false>
+```
+
+Examples:
+```bash
+$ python .\src\main.py --network true
+or
+$ python .\src\main.py --network false
+or
+$ python .\src\main.py --network True --promote True --content false 
+```
+
+### Configuration
+
 ```properties
 # .\main.properties file
 
@@ -59,10 +80,6 @@ twitter.<ACCOUNT_1>.TWITTER_FEATURES_<FEATURE_2>_<OPTION> = ...
 ...
 # @<ACCOUNT_2>
 twitter.<ACCOUNT_2>.TWITTER_CONSUMER_KEY = opcOqjVo**************
-```
-
-```bash
-$ python .\src\main.py
 ```
 
 ## Example (single account)

@@ -54,7 +54,7 @@ def follow_file(api, pathname, max = 9):
                 break
             try:
                 follower = api.get_user(user_id = line)
-                if follower != me and not follower.following:
+                if follower != me and not follower.following or follower.follow_request_sent:
                     logger.info(f"  Following @{follower.screen_name}")
                     follower.follow()
                     count += 1

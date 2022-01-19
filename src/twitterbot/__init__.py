@@ -1,5 +1,5 @@
 from twitterbot.config import initapi
-from twitterbot.config import initclient
+# from twitterbot.config import initclient
 
 from twitterbot.favtweet import favtweet
 from twitterbot.followback import followback

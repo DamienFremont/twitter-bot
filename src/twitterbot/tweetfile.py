@@ -6,7 +6,11 @@ import random
 import os.path
 import time
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
+
+# PUBLIC **********************************************************************
 
 def tweetfilerandom(api, pathname):
     #  OPEN
@@ -25,6 +29,8 @@ def tweetfilerandom(api, pathname):
     # os.chdir("..")
     file_name = files[rn]
     tweetfile(api, file_name)
+
+# PRIVATE *********************************************************************
 
 def tweetfile(api, file_name):
     with open(file_name, 'r') as file:
@@ -54,6 +60,8 @@ def tweetfile(api, file_name):
         time.sleep(5)
     except Exception as e:
         logger.warning(f"error tweeting '{file_name}': {e}")
+
+# SCRIPT **********************************************************************
 
 def main():
     api = initapi()

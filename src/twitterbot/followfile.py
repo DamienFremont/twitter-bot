@@ -4,7 +4,39 @@ from twitterbot.config import initapi
 import time
 import os, time
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
+
+# PUBLIC **********************************************************************
+
+def followfile(api, pathname, max = 9):
+    if not pathname:
+        me = api.verify_credentials()
+        file_name = f"twitterbot-followfile-@{me.screen_name}.csv"
+    logger.info(f"followfile from {file_name}")
+    count = 0
+    i = 0
+    with open(file_name, "r") as file:
+        lines = file.readlines()
+        for line in lines:
+            if i >= max:
+                break
+            try:
+                follower = api.get_user(user_id = line)
+                if follower != me and not follower.following or follower.follow_request_sent:
+                    logger.info(f"  Following @{follower.screen_name}")
+                    follower.follow()
+                    count += 1
+                    time.sleep(5)
+            except Exception as e:
+                logger.warning(f"  Skip user_id {line}: {e}")
+            i += 1
+            delete_line_in_file(file_name, f"{str(line)}")
+    logger.info(f"{count} users followed from file {file_name} ")
+    logger.info(f"{i} lines removed from file {file_name} ")
+
+# PRIVATE *********************************************************************
 
 def keep_unique(array, seens):
     lines_seen = set() # holds lines already seen
@@ -38,32 +70,6 @@ def writefollowfile(api, screen_name, file_name):
     except Exception as e:
         logger.warning(e)
 
-def followfile(api, pathname, max = 9):
-    if not pathname:
-        me = api.verify_credentials()
-        file_name = f"twitterbot-followfile-@{me.screen_name}.csv"
-    logger.info(f"followfile from {file_name}")
-    count = 0
-    i = 0
-    with open(file_name, "r") as file:
-        lines = file.readlines()
-        for line in lines:
-            if i >= max:
-                break
-            try:
-                follower = api.get_user(user_id = line)
-                if follower != me and not follower.following or follower.follow_request_sent:
-                    logger.info(f"  Following @{follower.screen_name}")
-                    follower.follow()
-                    count += 1
-                    time.sleep(5)
-            except Exception as e:
-                logger.warning(f"  Skip user_id {line}: {e}")
-            i += 1
-            delete_line_in_file(file_name, f"{str(line)}")
-    logger.info(f"{count} users followed from file {file_name} ")
-    logger.info(f"{i} lines removed from file {file_name} ")
-
 def delete_line_in_file(file_name, search_line):
     with open(file_name, "r+") as f:
         d = f.readlines()
@@ -72,6 +78,8 @@ def delete_line_in_file(file_name, search_line):
             if i != search_line:
                 f.write(i)
         f.truncate()
+
+# SCRIPT **********************************************************************
 
 def main():
     api = initapi()

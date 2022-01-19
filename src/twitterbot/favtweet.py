@@ -4,7 +4,22 @@ from twitterbot.config import initapi
 import json
 import time
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
+
+# PUBLIC **********************************************************************
+
+def favtweet(api, user_id, max = 4):
+    logger.info(f"favtweet from @{user_id}")
+    count = 0
+    me = api.verify_credentials()
+    tweets = get_last_tweets(api, user_id, max)
+    for tweet in tweets:
+        count += on_status(me, tweet)
+    logger.info(f"{count} tweets liked from @{user_id}")
+
+# PRIVATE *********************************************************************
 
 def get_last_tweets(api, user_id, max = 4):
     return api.user_timeline(screen_name=user_id,
@@ -35,14 +50,7 @@ def on_status(me, tweet):
                 f"Error on like tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
     return count
 
-def favtweet(api, user_id, max = 4):
-    logger.info(f"favtweet from @{user_id}")
-    count = 0
-    me = api.verify_credentials()
-    tweets = get_last_tweets(api, user_id, max)
-    for tweet in tweets:
-        count += on_status(me, tweet)
-    logger.info(f"{count} tweets liked from @{user_id}")
+# SCRIPT **********************************************************************
 
 def main():
     api = initapi()

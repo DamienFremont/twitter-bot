@@ -2,23 +2,15 @@ import os
 import logging
 import configparser
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger()
 
 config_pathname = os.getenv("TWITTERBOT_CONFIG", 'main.properties')
 config = configparser.RawConfigParser()
 config.read(config_pathname)
 
-def envFromProps(userID, key, required):
-    propKey = f'twitter.{userID}.{key}'
-    try:
-        os.environ[key] = config.get('Twitter', propKey)
-    except Exception as e:
-        if required:
-            logger.error(f"missing prop key {propKey}")
-            logger.debug("you need to :")
-            logger.debug("- fix your main.properties file")
-            os._exit(0)
-        os.environ[key] = ''
+# PUBLIC **********************************************************************
 
 def init():
     os.environ["TWITTER_ACCOUNTS"] = config.get('Twitter', 'twitter.TWITTER_ACCOUNTS')
@@ -51,3 +43,17 @@ def switch(userID):
     envFromProps(userID, 'TWITTER_INIT_FEATURES', OPTIONNAL)
     envFromProps(userID, 'TWITTER_INIT_FEATURES_FOLLOWFILE_USER', OPTIONNAL)
     envFromProps(userID, 'TWITTER_INIT_FEATURES_FOLLOWFILE_PATHNAME', OPTIONNAL)
+
+# PRIVATE *********************************************************************
+
+def envFromProps(userID, key, required):
+    propKey = f'twitter.{userID}.{key}'
+    try:
+        os.environ[key] = config.get('Twitter', propKey)
+    except Exception as e:
+        if required:
+            logger.error(f"missing prop key {propKey}")
+            logger.debug("you need to :")
+            logger.debug("- fix your main.properties file")
+            os._exit(0)
+        os.environ[key] = ''

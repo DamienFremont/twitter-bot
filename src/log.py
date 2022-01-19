@@ -1,7 +1,11 @@
 import logging
 import datetime
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
+
+# PUBLIC **********************************************************************
 
 def initLogger(logger, appname = "twitterbot", modulename = "twitter"):
     # CONST

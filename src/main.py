@@ -3,10 +3,16 @@ import logging
 import config, log
 import twitterbot
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
 log.initLogger(logger, appname='twitterbot', modulename='main')
 
-def main(argv):
+# PUBLIC **********************************************************************
+
+# PRIVATE *********************************************************************
+
+def bot(argv):
     argdic = getargs(argv, [
         { 'opt':'create',  'defarg':'true' },
         { 'opt':'promote', 'defarg':'true' },
@@ -180,6 +186,11 @@ def getargs(argv, configs, helpmsg=None):
             res[conf['longopt']] = conf['defarg']
         print(f"argument --{conf['longopt']}: '{res[conf['longopt']]}'")
     return res
+
+# SCRIPT **********************************************************************
+
+def main(argv):
+    bot(argv)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

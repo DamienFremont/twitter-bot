@@ -2,7 +2,11 @@ import tweepy
 import logging
 import os
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
+
+# PUBLIC **********************************************************************
 
 def initapi():
     consumer_key = os.getenv("TWITTER_CONSUMER_KEY")
@@ -21,9 +25,9 @@ def initapi():
     logger.info(f"Session created (API v1)")
     return api
 
-def initclient():
-    bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
-    api = tweepy.Client(bearer_token,
-                     wait_on_rate_limit=False)
-    logger.info(f"Session created (API v2)")
-    return api
+# def initclient():
+#     bearer_token = os.getenv("TWITTER_BEARER_TOKEN")
+#     api = tweepy.Client(bearer_token,
+#                      wait_on_rate_limit=False)
+#     logger.info(f"Session created (API v2)")
+#     return api

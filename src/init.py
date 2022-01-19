@@ -3,10 +3,16 @@ import logging, log
 import config
 import twitterbot
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
 log.initLogger(logger, appname='twitterbot', modulename='init')
 
-def run():
+# PUBLIC **********************************************************************
+
+# PRIVATE *********************************************************************
+
+def init():
     logger.info("")
     logger.info("*****************")
     logger.info("* Init          *")
@@ -29,8 +35,10 @@ def run():
             twitterbot.writefollowfile(api, screen_name, file_name)
             logger.info(" ")
 
+# SCRIPT **********************************************************************
+
 def main():
-    run()
+    init()
 
 if __name__ == "__main__":
     main()

@@ -3,7 +3,11 @@ import logging
 from twitterbot.config import initapi
 import time
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
+
+# PUBLIC **********************************************************************
 
 def followfriends(api, user_id):
     logger.info(f"followfriends from @{user_id}")
@@ -18,6 +22,10 @@ def followfriends(api, user_id):
     except Exception as e:
         logger.warning(e)
     logger.info(f"{count} friends followed from @{user_id}")
+
+# PRIVATE *********************************************************************
+
+# SCRIPT **********************************************************************
 
 def main():
     api = initapi()

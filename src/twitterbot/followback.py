@@ -5,7 +5,11 @@ import tweepy
 from math import *
 import os
 
+# STATIC **********************************************************************
+
 logger = logging.getLogger('twitterbot')
+
+# PUBLIC **********************************************************************
 
 def followback(api):
     """followback(api)
@@ -41,6 +45,10 @@ def followback(api):
     except Exception as e:
         logger.warning(e)         
     logger.info(f"{count} follow from last {pageSize} followers")
+
+# PRIVATE *********************************************************************
+
+# SCRIPT **********************************************************************
 
 def main():
     api = initapi()

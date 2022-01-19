@@ -13,11 +13,7 @@ log.initLogger(logger, appname='twitterbot', modulename='test')
 # PRIVATE *********************************************************************
 
 def test():
-    logger.info("")
-    logger.info("*****************")
-    logger.info("* Test          *")
-    logger.info("*****************")
-    logger.info("")
+    logger.info("Twitter Bot : Test")
     config.init()
     account = 'DFremontGameDev'
     logger.info(f"Account @{account}")

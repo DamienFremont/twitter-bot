@@ -28,7 +28,7 @@ def followback(api):
     pageSize = int(os.getenv("TWITTER_FEATURES_FOLLOWBACK_MAX", 10))
     count = 0
     me = api.verify_credentials()
-    logger.info(f"followback from {me.screen_name}")
+    logger.info(f"followback : {me.screen_name}")
     try:
         pageCount = ceil(me.followers_count / pageSize)
         cursoriter = tweepy.Cursor(api.get_followers, count=pageSize).pages()
@@ -36,15 +36,15 @@ def followback(api):
         lastPage = cursoriter.next()
         for follower in lastPage:
             if follower.following or follower.follow_request_sent:
-                logger.debug(f"  Skipping @{follower.screen_name}")
+                logger.debug(f"......Skipping @{follower.screen_name}")
                 continue
-            logger.info(f"  Following @{follower.screen_name}")
+            logger.info(f"......Following @{follower.screen_name}")
             follower.follow()
             count += 1
             time.sleep(5)
     except Exception as e:
         logger.warning(e)         
-    logger.info(f"{count} follow from last {pageSize} followers")
+    logger.info(f"...{count} follow from last {pageSize} followers")
 
 # PRIVATE *********************************************************************
 

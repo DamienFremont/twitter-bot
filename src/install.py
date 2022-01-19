@@ -12,12 +12,8 @@ log.initLogger(logger, appname='twitterbot', modulename='init')
 
 # PRIVATE *********************************************************************
 
-def init():
-    logger.info("")
-    logger.info("*****************")
-    logger.info("* Init          *")
-    logger.info("*****************")
-    logger.info("")
+def install():
+    logger.info("Twitter Bot : Install")
     config.init()
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
@@ -32,13 +28,13 @@ def init():
             screen_name = os.getenv("TWITTER_INIT_FEATURES_FOLLOWFILE_USER")
             file_name = os.getenv("TWITTER_INIT_FEATURES_FOLLOWFILE_PATHNAME")
             logger.info(screen_name)
-            twitterbot.writefollowfile(api, screen_name, file_name)
+            twitterbot.initfile(api, screen_name, file_name)
             logger.info(" ")
 
 # SCRIPT **********************************************************************
 
 def main():
-    init()
+    install()
 
 if __name__ == "__main__":
     main()

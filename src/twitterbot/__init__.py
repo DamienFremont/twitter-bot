@@ -8,4 +8,4 @@ from twitterbot.followfile import followfile
 from twitterbot.retweetuser import retweetuser
 from twitterbot.tweetfile import tweetfilerandom
 
-from twitterbot.followfile import writefollowfile
+from twitterbot.followfile import initfile

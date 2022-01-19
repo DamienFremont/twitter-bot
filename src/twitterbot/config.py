@@ -22,7 +22,7 @@ def initapi():
     except Exception as e:
         logger.error(f"Error creating session", exc_info=True)
         raise e
-    logger.info(f"Session created (API v1)")
+    logger.debug(f"Session created (API v1)")
     return api
 
 # def initclient():

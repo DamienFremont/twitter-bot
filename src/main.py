@@ -17,33 +17,23 @@ def bot(argv):
         { 'opt':'create',  'defarg':'true' },
         { 'opt':'promote', 'defarg':'true' },
         { 'opt':'network', 'defarg':'true' } ])
-    init()
+    logger.info("Twitter Bot")
+    config.init()
     if istrue(argdic.get('create')):
         contentstep()
     if istrue(argdic.get('promote')):
         promotestep()
     if istrue(argdic.get('network')):
         networkstep()
-    logger.info("")
-    logger.info("End with success.")
+    logger.info("Twitter Bot : End with success.")
     # logger.info("Waiting...")
     # time.sleep(60 * 60)
 
 def istrue(str):
     return str in ('TRUE', 'True', 'true', '1')
 
-def init():
-    logger.info("")
-    logger.info("*****************")
-    logger.info("* Twitter Bot   *")
-    logger.info("*****************")
-    logger.info("")
-    config.init()
-
 def contentstep():
-    logger.info("")
-    logger.info("* Content *******")
-    logger.info("")
+    logger.info("Twitter Bot : step 1/3 : Content")
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
         logger.info(f"Account @{account}")
@@ -58,18 +48,14 @@ def contentstep():
             # TODO
         # if 'retweetmentions' in features:
             # TODO
-        logger.info("")
 
 def promotestep():
-    logger.info("")
-    logger.info("* Promote *******")
-    logger.info("")
+    logger.info("Twitter Bot : step 2/3 : Promote")
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
-        logger.info(f"Account @{account}")
         config.switch(account)
         features = os.getenv("TWITTER_FEATURES").split(',')
-        logger.info(f"Features {features}")
+        logger.info(f"Account @{account} : Features {features}")
         api = twitterbot.initapi()
         if 'favtweet' in features:
             users = os.getenv("TWITTER_FEATURES_FAVTWEET_USERS").split(',')
@@ -86,12 +72,9 @@ def promotestep():
             # TODO
         # if 'replyfollow' in features:
             # TODO
-        logger.info("")
 
 def networkstep():
-    logger.info("")
-    logger.info("* Network *******")
-    logger.info("")
+    logger.info("Twitter Bot : step 2/3 : Network")
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
         logger.info(f"Account @{account}")
@@ -111,7 +94,6 @@ def networkstep():
             twitterbot.followback(api)
         # if 'unfollowinactive' in features:
             # TODO unfollowinactive(api)
-        logger.info("")
 
 # https://www.tutorialspoint.com/python/python_command_line_arguments.htm
 def getargs(argv, configs, helpmsg=None):

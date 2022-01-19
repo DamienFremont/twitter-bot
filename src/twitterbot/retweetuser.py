@@ -11,13 +11,13 @@ logger = logging.getLogger('twitterbot')
 # PUBLIC **********************************************************************
 
 def retweetuser(api, user_id):
-    logger.info(f"retweetuser from @{user_id}")
+    logger.info(f"retweetuser : @{user_id}")
     count = 0
     me = api.verify_credentials()
     tweets = get_last_tweets(api, user_id)
     for tweet in reversed(tweets):
         count += on_status(me, tweet)
-    logger.info(f"{count} tweets retweet from @{user_id}")
+    logger.info(f"...{count} tweets retweet from @{user_id}")
 
 # PRIVATE *********************************************************************
 
@@ -43,11 +43,11 @@ def on_status(me, tweet):
             tweet.retweet()
             count += 1
             logger.info(
-                f"  retweet tweet id:{tweet.id} from @{tweet.user.screen_name}")
+                f"......retweet tweet id:{tweet.id} from @{tweet.user.screen_name}")
             time.sleep(15)
         except Exception as e:
             logger.error(
-                f"Error on retweet tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
+                f"......Error on retweet tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
     return count
 
 # SCRIPT **********************************************************************

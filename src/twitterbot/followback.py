@@ -21,10 +21,10 @@ def followback(api):
     -------
     (void)
     """
-    logger.debug("Retrieving and following followers")
     pageSize = int(os.getenv("TWITTER_FEATURES_FOLLOWBACK_MAX", 10))
     count = 0
     me = api.verify_credentials()
+    logger.info(f"followback from {me.screen_name}")
     try:
         pageCount = ceil(me.followers_count / pageSize)
         cursoriter = tweepy.Cursor(api.get_followers, count=pageSize).pages()

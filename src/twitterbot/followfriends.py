@@ -6,6 +6,7 @@ import time
 logger = logging.getLogger('twitterbot')
 
 def followfriends(api, user_id):
+    logger.info(f"followfriends from @{user_id}")
     count = 0
     try:
         for follower in api.get_friends(user_id = user_id):

@@ -42,6 +42,7 @@ def followfile(api, pathname, max = 9):
     if not pathname:
         me = api.verify_credentials()
         file_name = f"twitterbot-followfile-@{me.screen_name}.csv"
+    logger.info(f"followfile from {file_name}")
     count = 0
     i = 0
     with open(file_name, "r") as file:

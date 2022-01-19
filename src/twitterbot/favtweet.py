@@ -6,8 +6,8 @@ import time
 
 logger = logging.getLogger('twitterbot')
 
-def get_last_tweets(api, userID, max = 4):
-    return api.user_timeline(screen_name=userID,
+def get_last_tweets(api, user_id, max = 4):
+    return api.user_timeline(screen_name=user_id,
                              # 200 is the maximum allowed count
                              count=max,
                              include_rts=False,
@@ -35,20 +35,21 @@ def on_status(me, tweet):
                 f"Error on like tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
     return count
 
-def favtweet(api, userID, max = 4):
+def favtweet(api, user_id, max = 4):
+    logger.info(f"favtweet from @{user_id}")
     count = 0
     me = api.verify_credentials()
-    tweets = get_last_tweets(api, userID, max)
+    tweets = get_last_tweets(api, user_id, max)
     for tweet in tweets:
         count += on_status(me, tweet)
-    logger.info(f"{count} tweets liked from @{userID}")
+    logger.info(f"{count} tweets liked from @{user_id}")
 
 def main():
     api = initapi()
-    userID = os.getenv("TWITTER_FAVTWEET_USER")
+    user_id = os.getenv("TWITTER_FAVTWEET_USER")
     max = os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4)
     while True:
-        fav_user_tweet(api, userID, max)
+        favtweet(api, user_id, max)
         logger.info("Waiting...")
         time.sleep(60)
 

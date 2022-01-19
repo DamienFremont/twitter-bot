@@ -6,8 +6,8 @@ import time
 
 logger = logging.getLogger('twitterbot')
 
-def get_last_tweets(api, userID):
-    return api.user_timeline(screen_name=userID,
+def get_last_tweets(api, user_id):
+    return api.user_timeline(screen_name=user_id,
                              # 200 is the maximum allowed count
                              count=5,
                              include_rts=False,
@@ -35,19 +35,20 @@ def on_status(me, tweet):
                 f"Error on retweet tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
     return count
 
-def retweetuser(api, userID):
+def retweetuser(api, user_id):
+    logger.info(f"retweetuser from @{user_id}")
     count = 0
     me = api.verify_credentials()
-    tweets = get_last_tweets(api, userID)
+    tweets = get_last_tweets(api, user_id)
     for tweet in reversed(tweets):
         count += on_status(me, tweet)
-    logger.info(f"{count} tweets retweet from @{userID}")
+    logger.info(f"{count} tweets retweet from @{user_id}")
 
 def main():
     api = initapi()
-    userID = os.getenv("TWITTER_RETWEETUSERTWEET_USER")
+    user_id = os.getenv("TWITTER_RETWEETUSERTWEET_USER")
     while True:
-        retweetuser(api, userID)
+        retweetuser(api, user_id)
         logger.info("Waiting...")
         time.sleep(60)
 

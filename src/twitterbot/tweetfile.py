@@ -16,6 +16,7 @@ def tweetfilerandom(api, pathname):
     if not os.path.isdir(pathname):
         logger.warning(f"skip tweeting: The system cannot find the pathname specified: '{pathname}'")
         return
+    logger.info(f"tweetfilerandom from {pathname}")
     # RANDOM
     files = glob.glob(f"{pathname}/*.txt")
     nb = len(files)

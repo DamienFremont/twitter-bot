@@ -25,12 +25,12 @@ def followfile(api, pathname, max = 9):
             try:
                 follower = api.get_user(user_id = line)
                 if follower != me and not follower.following or follower.follow_request_sent:
-                    logger.info(f"......Following @{follower.screen_name}")
+                    logger.info(f"...Following @{follower.screen_name}")
                     follower.follow()
                     count += 1
                     time.sleep(5)
             except Exception as e:
-                logger.warning(f"......Skip user_id {line}: {e}")
+                logger.warning(f"...Skip user_id {line}: {e}")
             i += 1
             delete_line_in_file(file_name, f"{str(line)}")
     logger.info(f"...{i} lines removed from file {file_name} ")

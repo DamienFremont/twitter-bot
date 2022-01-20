@@ -36,9 +36,9 @@ def followback(api):
         lastPage = cursoriter.next()
         for follower in lastPage:
             if follower.following or follower.follow_request_sent:
-                logger.debug(f"......Skipping @{follower.screen_name}")
+                logger.debug(f"...Skipping @{follower.screen_name}")
                 continue
-            logger.info(f"......Following @{follower.screen_name}")
+            logger.info(f"...Following @{follower.screen_name}")
             follower.follow()
             count += 1
             time.sleep(5)

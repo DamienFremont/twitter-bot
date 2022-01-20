@@ -43,11 +43,11 @@ def on_status(me, tweet):
             tweet.favorite()
             count += 1
             logger.info(
-                f"......liked tweet id:{tweet.id} from @{tweet.user.screen_name}")
+                f"...liked tweet id:{tweet.id} from @{tweet.user.screen_name}")
             time.sleep(15)
         except Exception as e:
             logger.error(
-                f"......Error on like tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
+                f"...Error on like tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
     return count
 
 # SCRIPT **********************************************************************

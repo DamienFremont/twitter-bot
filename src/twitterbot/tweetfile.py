@@ -17,7 +17,7 @@ def tweetfilerandom(api, pathname):
     if not pathname:
         me = api.verify_credentials()
         pathname = f"twitterbot-tweetfile-@{me.screen_name}"
-    logger.info(f"tweetfile : {pathname}/")
+    logger.info(f"tweetfile : {me.screen_name} folder {pathname}/")
     if not os.path.isdir(pathname):
         logger.warning(f"...skip tweeting: The system cannot find the pathname specified: '{pathname}'")
         return

@@ -1,4 +1,5 @@
-import sys, os, glob, getopt
+import sys, os, glob, getopt, time
+from distutils.util import strtobool
 import logging
 import config, log
 import twitterbot
@@ -12,88 +13,76 @@ log.initLogger(logger, appname='twitterbot', modulename='main')
 
 # PRIVATE *********************************************************************
 
-def bot(argv):
-    argdic = getargs(argv, [
-        { 'opt':'create',  'defarg':'true' },
-        { 'opt':'promote', 'defarg':'true' },
-        { 'opt':'network', 'defarg':'true' } ])
-    logger.info("Twitter Bot")
+def batch(create, promote, network):
+    logger.info("Job: [twitterbot]")
     config.init()
-    if istrue(argdic.get('create')):
-        contentstep()
-    if istrue(argdic.get('promote')):
-        promotestep()
-    if istrue(argdic.get('network')):
-        networkstep()
-    logger.info("Twitter Bot : End with success.")
-    # logger.info("Waiting...")
-    # time.sleep(60 * 60)
+    if create:
+        logger.info("Executing step: [create]")
+        accountsloop(
+            createstep)
+    if promote:
+        logger.info("Executing step: [promote]")
+        accountsloop(
+            promotestep)
+    if network:
+        logger.info("Executing step: [network]")
+        accountsloop(
+            networkstep)
+    logger.info("Job finished.")
 
-def istrue(str):
-    return str in ('TRUE', 'True', 'true', '1')
+def createstep(api, features):
+    if 'tweetfile' in features:
+        pathname = os.getenv("TWITTER_FEATURES_TWEETFILE_PATHNAME")
+        twitterbot.tweetfilerandom(api, pathname)
+    # if 'retweettag' in features:
+        # TODO
+    # if 'retweetmentions' in features:
+        # TODO
 
-def contentstep():
-    logger.info("Twitter Bot : step 1/3 : Content")
+def promotestep(api, features):
+    if 'favtweet' in features:
+        users = os.getenv("TWITTER_FEATURES_FAVTWEET_USERS").split(',')
+        max = int(os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4))
+        for userID in users:
+            twitterbot.favtweet(api, userID)
+    if 'retweetuser' in features:
+        users = os.getenv("TWITTER_FEATURES_RETWEETUSER_USERS").split(',')
+        for userId in users:
+            twitterbot.retweetuser(api, userId)
+    # if 'favmentions' in features:
+        # TODO
+    # if 'replymessage' in features:
+        # TODO
+    # if 'replyfollow' in features:
+        # TODO
+
+def networkstep(api, features):
+    if 'followfile' in features:
+        max = int(os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9))
+        pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
+        twitterbot.followfile(api, pathname = pathname, max = max)
+    if 'followfriends' in features:
+        users = os.getenv("TWITTER_FEATURES_FOLLOWFRIENDS_USERS").split(',')
+        for userId in users:
+            twitterbot.followfriends(api, userId)
+    if 'followback' in features:
+        twitterbot.followback(api)
+    # if 'unfollowinactive' in features:
+        # TODO unfollowinactive(api)
+
+def accountsloop(method):
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
-        logger.info(f"Account @{account}")
-        config.switch(account)
-        features = os.getenv("TWITTER_FEATURES").split(',')
-        logger.info(f"Features {features}")
-        api = twitterbot.initapi()
-        if 'tweetfile' in features:
-            pathname = os.getenv("TWITTER_FEATURES_TWEETFILE_PATHNAME")
-            twitterbot.tweetfilerandom(api, pathname)
-        # if 'retweettag' in features:
-            # TODO
-        # if 'retweetmentions' in features:
-            # TODO
+        api, features = initstep(account)
+        logger.info(f"Processing item: [account: @{account}, features: [{features}]]")
+        method(api, features)
+        # logger.info("")
 
-def promotestep():
-    logger.info("Twitter Bot : step 2/3 : Promote")
-    accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
-    for account in accounts:
-        config.switch(account)
-        features = os.getenv("TWITTER_FEATURES").split(',')
-        logger.info(f"Account @{account} : Features {features}")
-        api = twitterbot.initapi()
-        if 'favtweet' in features:
-            users = os.getenv("TWITTER_FEATURES_FAVTWEET_USERS").split(',')
-            max = int(os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4))
-            for userID in users:
-                twitterbot.favtweet(api, userID)
-        if 'retweetuser' in features:
-            users = os.getenv("TWITTER_FEATURES_RETWEETUSER_USERS").split(',')
-            for userId in users:
-                twitterbot.retweetuser(api, userId)
-        # if 'favmentions' in features:
-            # TODO
-        # if 'replymessage' in features:
-            # TODO
-        # if 'replyfollow' in features:
-            # TODO
-
-def networkstep():
-    logger.info("Twitter Bot : step 2/3 : Network")
-    accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
-    for account in accounts:
-        logger.info(f"Account @{account}")
-        config.switch(account)
-        features = os.getenv("TWITTER_FEATURES").split(',')
-        logger.info(f"Features {features}")
-        api = twitterbot.initapi()
-        if 'followfile' in features:
-            max = int(os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9))
-            pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
-            twitterbot.followfile(api, pathname = pathname, max = max)
-        if 'followfriends' in features:
-            users = os.getenv("TWITTER_FEATURES_FOLLOWFRIENDS_USERS").split(',')
-            for userId in users:
-                twitterbot.followfriends(api, userId)
-        if 'followback' in features:
-            twitterbot.followback(api)
-        # if 'unfollowinactive' in features:
-            # TODO unfollowinactive(api)
+def initstep(account):
+    config.switch(account)
+    features = os.getenv("TWITTER_FEATURES").split(',')
+    api = twitterbot.initapi()
+    return api, features
 
 # https://www.tutorialspoint.com/python/python_command_line_arguments.htm
 def getargs(argv, configs, helpmsg=None):
@@ -163,6 +152,7 @@ def getargs(argv, configs, helpmsg=None):
                     res[conf['longopt']] = arg
                     continue
     # DEFAULT ARGS
+    print("Running default command line with: ")
     for conf in configs:
         if not conf['longopt'] in res.keys():
             res[conf['longopt']] = conf['defarg']
@@ -172,7 +162,24 @@ def getargs(argv, configs, helpmsg=None):
 # SCRIPT **********************************************************************
 
 def main(argv):
-    bot(argv)
+    argd = getargs(argv, [
+        { 'opt':'loop',    'defarg':'true' },
+        { 'opt':'wait',    'defarg':'60'   },
+        { 'opt':'create',  'defarg':'true' },
+        { 'opt':'promote', 'defarg':'true' },
+        { 'opt':'network', 'defarg':'true' }])
+    logger.info("Twitter Bot")
+    create = strtobool(argd.get('create'))
+    promote = strtobool(argd.get('promote'))
+    network = strtobool(argd.get('network'))
+    loop = strtobool(argd.get('loop'))
+    wait = int(argd.get('wait'))
+    while True:
+        batch(create, promote, network)
+        if not loop:
+            break
+        logger.info(f"Waiting for {wait} minutes...")
+        time.sleep(wait * 60)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

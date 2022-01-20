@@ -47,7 +47,7 @@ python .\src\main.py
 ```
 or
 ```bash
-python .\src\main.py --create <true|false> --promote <true|false> --network <true|false>
+python .\src\main.py --create <true|false> --promote <true|false> --network <true|false> --loop <true|false> --wait <0|...|60>
 ```
 
 Examples:
@@ -56,7 +56,9 @@ $ python .\src\main.py --network true
 or
 $ python .\src\main.py --network false
 or
-$ python .\src\main.py --network True --promote True --content false 
+$ python .\src\main.py --network True --promote True --create false 
+or
+$ python .\src\main.py -n true -p true -c true -l false 
 ```
 
 ### Configuration

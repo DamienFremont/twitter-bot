@@ -17,9 +17,9 @@ def tweetfilerandom(api, pathname):
     if not pathname:
         me = api.verify_credentials()
         pathname = f"twitterbot-tweetfile-@{me.screen_name}"
-    logger.info(f"tweetfile : {me.screen_name} folder {pathname}/")
+    logger.info(f"tweetfile | @{me.screen_name} [folder: {pathname}/]")
     if not os.path.isdir(pathname):
-        logger.warning(f"...skip tweeting: The system cannot find the pathname specified: '{pathname}'")
+        logger.warning(f"tweetfile | skip tweeting: The system cannot find the pathname specified: '{pathname}'")
         return
     # RANDOM
     files = glob.glob(f"{pathname}/*.txt")
@@ -53,13 +53,14 @@ def tweetfile(api, file_name):
         if os.path.isfile(media_file):
             media = api.media_upload(filename = media_file)
             media_ids = [ media.media_id_string ]
+            logger.info(f"tweetfile | 1 tweet {media_file}")
             api.update_status(status = text, media_ids = media_ids)
         else:
+            logger.info(f"tweetfile | 1 tweet {file_name}")
             api.update_status(status = text)
-        logger.info(f"...1 tweet {file_name} {media_file}")
         time.sleep(5)
     except Exception as e:
-        logger.warning(f"...error tweeting '{file_name}': {e}")
+        logger.warning(f"tweetfile | error tweeting '{file_name}': {e}")
 
 # SCRIPT **********************************************************************
 

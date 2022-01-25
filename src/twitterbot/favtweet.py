@@ -12,12 +12,12 @@ logger = logging.getLogger('twitterbot')
 
 def favtweet(api, user_id, max = 4):
     me = api.verify_credentials()
-    logger.info(f"favtweet : @{me.screen_name} fav @{user_id}")
+    logger.info(f"favtweet | @{me.screen_name} [fav: @{user_id}]")
     count = 0
     tweets = get_last_tweets(api, user_id, max)
     for tweet in tweets:
         count += on_status(me, tweet)
-    logger.info(f"...{count} tweets liked from @{user_id}")
+    logger.info(f"favtweet | {count} tweets liked from @{user_id}")
 
 # PRIVATE *********************************************************************
 
@@ -43,11 +43,11 @@ def on_status(me, tweet):
             tweet.favorite()
             count += 1
             logger.info(
-                f"...liked tweet id:{tweet.id} from @{tweet.user.screen_name}")
+                f"favtweet | liked tweet id:{tweet.id} from @{tweet.user.screen_name}")
             time.sleep(15)
         except Exception as e:
             logger.error(
-                f"...Error on like tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
+                f"favtweet | Error on like tweet id:{tweet.id} from @{tweet.user.screen_name}", exc_info=True)
     return count
 
 # SCRIPT **********************************************************************
@@ -58,7 +58,7 @@ def main():
     max = os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4)
     while True:
         favtweet(api, user_id, max)
-        logger.info("Waiting...")
+        logger.info("favtweet | Waiting...")
         time.sleep(60)
 
 if __name__ == "__main__":

@@ -14,21 +14,21 @@ log.initLogger(logger, appname='twitterbot', modulename='main')
 # PRIVATE *********************************************************************
 
 def batch(create, promote, network):
-    logger.info("Job: [twitterbot]")
+    logger.info("Batch | Job")
     config.init()
     if create:
-        logger.info("Executing step: [create]")
+        logger.info("Batch | Executing step: [create]")
         accountsloop(
             createstep)
     if promote:
-        logger.info("Executing step: [promote]")
+        logger.info("Batch | Executing step: [promote]")
         accountsloop(
             promotestep)
     if network:
-        logger.info("Executing step: [network]")
+        logger.info("Batch | Executing step: [network]")
         accountsloop(
             networkstep)
-    logger.info("Job finished.")
+    logger.info("Batch | Job finished.")
 
 def createstep(api, features):
     if 'tweetfile' in features:
@@ -74,7 +74,7 @@ def accountsloop(method):
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
         api, features = initstep(account)
-        logger.info(f"Processing item: [account: @{account}, features: [{features}]]")
+        logger.info(f"Batch | Processing item: [@{account}, [{features}]]")
         method(api, features)
         # logger.info("")
 

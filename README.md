@@ -164,13 +164,19 @@ After you run the commands, your environment variables will contain the credenti
 
 ## References
 
+
 - https://developer.twitter.com/en/portal/dashboard
 
-- Tutorials
-  - https://www.geeksforgeeks.org/how-to-make-a-twitter-bot-in-python/
-  - https://realpython.com/twitter-bot-python-tweepy/
-- Domain
-  - https://en.wikipedia.org/wiki/Online_community_manager
-- Docs
-  - http://docs.tweepy.org/en/latest/
-  - https://docs.python.org/3/library/venv.html
+- Tutorials 
+
+  - API v2
+    - https://dev.to/twitterdev/a-comprehensive-guide-for-using-the-twitter-api-v2-using-tweepy-in-python-15d9
+
+  - API v1
+    - https://www.geeksforgeeks.org/how-to-make-a-twitter-bot-in-python/
+    - https://realpython.com/twitter-bot-python-tweepy/
+  - Domain
+    - https://en.wikipedia.org/wiki/Online_community_manager
+  - Docs
+    - http://docs.tweepy.org/en/latest/
+    - https://docs.python.org/3/library/venv.html

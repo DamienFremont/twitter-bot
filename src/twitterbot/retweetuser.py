@@ -10,21 +10,22 @@ logger = logging.getLogger('twitterbot')
 
 # PUBLIC **********************************************************************
 
-def retweetuser(api, user_id):
+def retweetuser(api, user_id, max):
     logger.info(f"retweetuser | @{user_id}")
     count = 0
     me = api.verify_credentials()
-    tweets = get_last_tweets(api, user_id)
+    tweets = get_last_tweets(api, user_id, max)
     for tweet in reversed(tweets):
+        print(tweet.id)
         count += on_status(me, tweet)
     logger.info(f"retweetuser | {count} tweets retweet from @{user_id}")
 
 # PRIVATE *********************************************************************
 
-def get_last_tweets(api, user_id):
+def get_last_tweets(api, user_id, max=10):
     return api.user_timeline(screen_name=user_id,
                              # 200 is the maximum allowed count
-                             count=5,
+                             count=max,
                              include_rts=False,
                              # Necessary to keep full_text
                              # otherwise only the first 140 words are extracted
@@ -55,8 +56,9 @@ def on_status(me, tweet):
 def main():
     api = initapi()
     user_id = os.getenv("TWITTER_RETWEETUSERTWEET_USER")
+    max = os.getenv("TWITTER_FEATURES_RETWEETUSER_MAX")
     while True:
-        retweetuser(api, user_id)
+        retweetuser(api, user_id, max)
         logger.info("retweetuser | Waiting...")
         time.sleep(60)
 

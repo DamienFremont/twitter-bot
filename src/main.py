@@ -46,8 +46,9 @@ def promotestep(api, features):
             twitterbot.favtweet(api, userID)
     if 'retweetuser' in features:
         users = os.getenv("TWITTER_FEATURES_RETWEETUSER_USERS").split(',')
+        max = int(os.getenv("TWITTER_FEATURES_RETWEETUSER_MAX", 10))
         for userId in users:
-            twitterbot.retweetuser(api, userId)
+            twitterbot.retweetuser(api, userId, max)
     # if 'favmentions' in features:
         # TODO
     # if 'replymessage' in features:

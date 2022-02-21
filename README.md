@@ -90,15 +90,15 @@ twitter.<ACCOUNT_2>.TWITTER_CONSUMER_KEY = opcOqjVo**************
 # .\main.properties file
 
 [Twitter]
-twitter.TWITTER_ACCOUNTS = DFremontGameDev
+twitter.TWITTER_ACCOUNTS = FremontGames
 
-# @DFremontGameDev
-twitter.DFremontGameDev.TWITTER_CONSUMER_KEY = opcOqjVo**************
-twitter.DFremontGameDev.TWITTER_CONSUMER_SECRET = X27ePBXCb**************
-twitter.DFremontGameDev.TWITTER_BEARER_TOKEN = AAAAAAAAAAAAAA**************
-twitter.DFremontGameDev.TWITTER_ACCESS_TOKEN = 873278**************
-twitter.DFremontGameDev.TWITTER_ACCESS_TOKEN_SECRET = yg0c9t**************
-twitter.DFremontGameDev.TWITTER_FEATURES = followback
+# @FremontGames
+twitter.FremontGames.TWITTER_CONSUMER_KEY = opcOqjVo**************
+twitter.FremontGames.TWITTER_CONSUMER_SECRET = X27ePBXCb**************
+twitter.FremontGames.TWITTER_BEARER_TOKEN = AAAAAAAAAAAAAA**************
+twitter.FremontGames.TWITTER_ACCESS_TOKEN = 873278**************
+twitter.FremontGames.TWITTER_ACCESS_TOKEN_SECRET = yg0c9t**************
+twitter.FremontGames.TWITTER_FEATURES = followback
 ```
 
 ```bash
@@ -111,10 +111,10 @@ $ python .\src\main.py
 # .\main.properties file
 
 [Twitter]
-twitter.TWITTER_ACCOUNTS = DFremontGameDev,Cars2048
+twitter.TWITTER_ACCOUNTS = FremontGames,Cars2048
 
-# @DFremontGameDev
-twitter.DFremontGameDev.TWITTER_CONSUMER_KEY = opcOqjVo**************
+# @FremontGames
+twitter.FremontGames.TWITTER_CONSUMER_KEY = opcOqjVo**************
 ...
 # @Cars2048
 twitter.Cars2048.TWITTER_CONSUMER_KEY = k1XBM**************
@@ -134,12 +134,12 @@ twitter.TWITTER_FEATURES_FOLLOWFILE_MAX = 9
 twitter.TWITTER_FEATURES_FAVTWEET_MAX = 4
 twitter.TWITTER_FEATURES_FOLLOWBACK_MAX = 100
 ...
-twitter.DFremontGameDev.TWITTER_FEATURES = ...,favtweet,followfriends,retweetuser,tweetfile,followfile
-twitter.DFremontGameDev.TWITTER_FEATURES_FAVTWEET_USERS = Cars2048,Damien_Fremont
-twitter.DFremontGameDev.TWITTER_FEATURES_FOLLOWFRIENDS_USERS = Damien_Fremont
-twitter.DFremontGameDev.TWITTER_FEATURES_RETWEETUSER_USERS = Damien_Fremont
-twitter.DFremontGameDev.TWITTER_FEATURES_TWEETFILE_PATHNAME = .\tweetfile-@DFremontGameDev
-twitter.DFremontGameDev.TWITTER_FEATURES_FOLLOWFILE_PATHNAME = .\followfile-@DFremontGameDev
+twitter.FremontGames.TWITTER_FEATURES = ...,favtweet,followfriends,retweetuser,tweetfile,followfile
+twitter.FremontGames.TWITTER_FEATURES_FAVTWEET_USERS = Cars2048,Damien_Fremont
+twitter.FremontGames.TWITTER_FEATURES_FOLLOWFRIENDS_USERS = Damien_Fremont
+twitter.FremontGames.TWITTER_FEATURES_RETWEETUSER_USERS = Damien_Fremont
+twitter.FremontGames.TWITTER_FEATURES_TWEETFILE_PATHNAME = .\tweetfile-@FremontGames
+twitter.FremontGames.TWITTER_FEATURES_FOLLOWFILE_PATHNAME = .\followfile-@FremontGames
 
 ```
 

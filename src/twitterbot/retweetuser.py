@@ -16,7 +16,6 @@ def retweetuser(api, user_id, max):
     me = api.verify_credentials()
     tweets = get_last_tweets(api, user_id, max)
     for tweet in reversed(tweets):
-        print(tweet.id)
         count += on_status(me, tweet)
     logger.info(f"retweetuser | {count} tweets retweet from @{user_id}")
 

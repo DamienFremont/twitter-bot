@@ -40,28 +40,61 @@ pip install -r requirements.txt --force-reinstall
 
 ## Usage
 
-### Command
+Note: for all-in-one usage use `src/main.py`. But every script in `src/twitterbot` is also standalone (eg: favtweet.py, etc).
+
+### Standalone Scripts
+
+1 script by launch, 1 feature, 1 account.
+
+Steps:
+1. set env vars for a twitter account
+2. launch one of standalone scripts from `src/twitterbot`
+
+eg:
 
 ```bash
-python .\src\main.py
-```
-or
-```bash
-python .\src\main.py --create <true|false> --promote <true|false> --network <true|false> --loop <true|false> --wait <0|...|60>
+set TWITTER_CONSUMER_KEY=opcOqjVo**************
+set TWITTER_CONSUMER_SECRET=X27ePBXCb**************
+set TWITTER_BEARER_TOKEN=AAAAAAAAAAAAAA**************
+set TWITTER_ACCESS_TOKEN=873278**************
+set TWITTER_ACCESS_TOKEN_SECRET=yg0c9t**************
+
+python .\src\twitterbot\followback.py
 ```
 
-Examples:
 ```bash
-$ python .\src\main.py --network true
-or
-$ python .\src\main.py --network false
-or
-$ python .\src\main.py --network True --promote True --create false 
-or
-$ python .\src\main.py -n true -p true -c true -l false 
+set ...
+set TWITTER_FEATURES_FAVTWEET_USERS=Damien_Fremont,FremontGames
+
+python .\src\twitterbot\favtweet.py
 ```
 
-### Configuration
+```bash
+set ...
+set TWITTER_FEATURES_RETWEETUSER_USERS=Damien_Fremont,FremontGames
+
+python .\src\twitterbot\retweetuser.py
+```
+
+```bash
+set ...
+set TWITTER_FEATURES_FOLLOWFRIENDS_USERS=Cars2048
+
+python .\src\twitterbot\followfriends.py
+```
+
+
+### Batch
+
+Main script launched, 1 properties file, multiple features, multiple accounts.
+
+Steps:
+1. setup properties configuration file
+2. put config file in your execution path, or add `TWITTERBOT_CONFIG_PATH` env var
+2. launch main script
+
+q 
+Note: default file is `main.properties`, or set env var `TWITTERBOT_CONFIG_PATH` to `<YOUR_PATH>/<YOUR_PROPS_FILE>`.
 
 ```properties
 # .\main.properties file
@@ -82,6 +115,24 @@ twitter.<ACCOUNT_1>.TWITTER_FEATURES_<FEATURE_2>_<OPTION> = ...
 ...
 # @<ACCOUNT_2>
 twitter.<ACCOUNT_2>.TWITTER_CONSUMER_KEY = opcOqjVo**************
+```
+
+```bash
+python .\src\main.py
+```
+or
+```bash
+python .\src\main.py --create <true|false> --promote <true|false> --network <true|false> --loop <true|false> --wait <0|...|60>
+```
+
+```bash
+$ python .\src\main.py --network true
+or
+$ python .\src\main.py --network false
+or
+$ python .\src\main.py --network True --promote True --create false 
+or
+$ python .\src\main.py -n true -p true -c true -l false 
 ```
 
 ## Example (single account)

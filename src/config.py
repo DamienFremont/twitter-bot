@@ -6,7 +6,7 @@ import configparser
 
 logger = logging.getLogger()
 
-config_pathname = os.getenv("TWITTERBOT_CONFIG", 'main.properties')
+config_pathname = os.getenv("TWITTERBOT_CONFIG_PATH", 'main.properties')
 config = configparser.RawConfigParser()
 config.read(config_pathname)
 

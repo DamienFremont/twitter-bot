@@ -54,8 +54,8 @@ def on_status(me, tweet):
 
 def main():
     api = initapi()
-    user_id = os.getenv("TWITTER_FAVTWEET_USER")
-    max = os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4)
+    user_id = os.getenv("TWITTER_FEATURES_FAVTWEET_USERS")
+    max =     os.getenv("TWITTER_FEATURES_FAVTWEET_MAX", 4)
     while True:
         favtweet(api, user_id, max)
         logger.info("favtweet | Waiting...")

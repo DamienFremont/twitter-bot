@@ -14,25 +14,30 @@ log.initLogger(logger, appname='twitterbot', modulename='main')
 
 def batch(create, promote, network):
     logger.info("Batch | Job")
-    config.init()
+    config.loadProperties()
     if create:
+        logger.info(" ")
         logger.info("Batch | Executing step: [create]")
         accountsloop(
             createstep)
     if promote:
+        logger.info(" ")
         logger.info("Batch | Executing step: [promote]")
         accountsloop(
             promotestep)
     if network:
+        logger.info(" ")
         logger.info("Batch | Executing step: [network]")
         accountsloop(
             networkstep)
+    logger.info(" ")
     logger.info("Batch | Job finished.")
 
 def createstep(api, features):
     if 'tweetfile' in features:
         pathname = os.getenv("TWITTER_FEATURES_TWEETFILE_PATHNAME")
-        twitterbot.tweetfilerandom(api, pathname)
+        pathdir = os.getenv("TWITTERBOT_CONFIG_PATH")
+        twitterbot.tweetfilerandom(api, pathname, fallback_dir=pathdir)
     # if 'retweettag' in features:
         # TODO
     # if 'retweetmentions' in features:
@@ -60,7 +65,8 @@ def networkstep(api, features):
     if 'followfile' in features:
         max = int(os.getenv("TWITTER_FEATURES_FOLLOWFILE_MAX", 9))
         pathname = os.getenv("TWITTER_FEATURES_FOLLOWFILE_PATHNAME")
-        twitterbot.followfile(api, pathname = pathname, max = max)
+        pathdir = os.getenv("TWITTERBOT_CONFIG_PATH")
+        twitterbot.followfile(api, pathname = pathname, max = max, fallback_dir = pathdir)
     if 'followfriends' in features:
         users = os.getenv("TWITTER_FEATURES_FOLLOWFRIENDS_USERS").split(',')
         for userId in users:
@@ -74,9 +80,10 @@ def accountsloop(method):
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
         api, features = initstep(account)
-        logger.info(f"Batch | Processing item: [@{account}, [{features}]]")
+        logger.info("")
+        logger.info(f"Batch | Processing item: [@{account}]")
+        logger.info(f"Batch | Processing feat: [{features}]")
         method(api, features)
-        # logger.info("")
 
 def initstep(account):
     config.switch(account)
@@ -186,6 +193,7 @@ def main(argv):
         { 'opt':'promote', 'defarg':'true' },
         { 'opt':'network', 'defarg':'true' }])
     logger.info("Twitter Bot")
+    logger.info(f'Exec. path : {os.getcwd()}')
     create = strtobool(argd.get('create'))
     promote = strtobool(argd.get('promote'))
     network = strtobool(argd.get('network'))

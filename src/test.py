@@ -14,7 +14,7 @@ log.initLogger(logger, appname='twitterbot', modulename='test')
 
 def test():
     logger.info("Twitter Bot : Test")
-    config.init()
+    config.loadProperties()
     account = 'FremontGames'
     logger.info(f"Account @{account}")
     config.switch(account)

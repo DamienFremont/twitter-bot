@@ -12,11 +12,11 @@ logger = logging.getLogger('twitterbot')
 
 # PUBLIC **********************************************************************
 
-def tweetfilerandom(api, pathname):
+def tweetfilerandom(api, pathname, fallback_dir = '.'):
     #  OPEN
     if not pathname:
         me = api.verify_credentials()
-        pathname = f"twitterbot-tweetfile-@{me.screen_name}"
+        pathname = f"{fallback_dir}/twitterbot-tweetfile-@{me.screen_name}"
     logger.info(f"tweetfile | @{me.screen_name} [folder: {pathname}/]")
     if not os.path.isdir(pathname):
         logger.warning(f"tweetfile | skip tweeting: The system cannot find the pathname specified: '{pathname}'")

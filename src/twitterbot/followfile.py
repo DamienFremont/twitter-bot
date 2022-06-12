@@ -10,10 +10,10 @@ logger = logging.getLogger('twitterbot')
 
 # PUBLIC **********************************************************************
 
-def followfile(api, pathname, max = 9):
+def followfile(api, pathname, max = 9, fallback_dir = '.'):
     if not pathname:
         me = api.verify_credentials()
-        file_name = f"twitterbot-followfile-@{me.screen_name}.csv"
+        file_name = f"{fallback_dir}/twitterbot-followfile-@{me.screen_name}.csv"
     logger.info(f"followfile | {file_name}")
     count = 0
     i = 0

@@ -90,11 +90,15 @@ Main script launched, 1 properties file, multiple features, multiple accounts.
 
 Steps:
 1. setup properties configuration file
-2. put config file in your execution path, or add `TWITTERBOT_CONFIG_PATH` env var
+2. put `main.properties` config file in your execution path, or add `TWITTERBOT_CONFIG_PATH` and `TWITTERBOT_CONFIG_FILE` env vars
 2. launch main script
 
-q 
-Note: default file is `main.properties`, or set env var `TWITTERBOT_CONFIG_PATH` to `<YOUR_PATH>/<YOUR_PROPS_FILE>`.
+Note: default file is `./main.properties`.
+```bash
+set TWITTERBOT_CONFIG_PATH=.
+set TWITTERBOT_CONFIG_FILE=main.properties
+```
+
 
 ```properties
 # .\main.properties file

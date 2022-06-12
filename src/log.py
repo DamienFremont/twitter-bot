@@ -1,5 +1,6 @@
 import logging
 import datetime
+import os
 
 # STATIC **********************************************************************
 
@@ -13,7 +14,7 @@ def initLogger(logger, appname = "twitterbot", modulename = "twitter"):
     DATE_FMT = "%Y%m%d_%H%M%S"
     now = datetime.datetime.now()
     # FILE
-    file_log_handler = logging.FileHandler(f"logs/{appname}-{now.strftime(DATE_FMT)}.log")
+    file_log_handler = logging.FileHandler(f"{appname}-{now.strftime(DATE_FMT)}.log")
     logger.addHandler(file_log_handler)
     # STD
     stderr_log_handler = logging.StreamHandler()

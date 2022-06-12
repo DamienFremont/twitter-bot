@@ -14,7 +14,7 @@ log.initLogger(logger, appname='twitterbot', modulename='init')
 
 def install():
     logger.info("Twitter Bot : Install")
-    config.init()
+    config.loadProperties()
     accounts = os.getenv("TWITTER_ACCOUNTS").split(',')
     for account in accounts:
         logger.info(f"Account @{account}")

@@ -6,13 +6,21 @@ import configparser
 
 logger = logging.getLogger()
 
-config_pathname = os.getenv("TWITTERBOT_CONFIG_PATH", 'main.properties')
+config_path = os.getenv("TWITTERBOT_CONFIG_PATH", '.')
+config_file = os.getenv("TWITTERBOT_CONFIG_FILE", 'main.properties')
+config_pathname = f'{config_path}\{config_file}'
 config = configparser.RawConfigParser()
 config.read(config_pathname)
 
 # PUBLIC **********************************************************************
 
-def init():
+def loadProperties():
+    print(f'Load config from {os.getcwd()}\{config_pathname}')
+    os.environ["TWITTERBOT_CONFIG_PATH"] = config_path
+    if (not config.has_section('Twitter')):
+        print(f'Error: Missing properties file or [Twitter] section at {os.getcwd()}\{config_pathname}')
+        quit()
+        return
     os.environ["TWITTER_ACCOUNTS"] = config.get('Twitter', 'twitter.TWITTER_ACCOUNTS')
     os.environ["TWITTER_FEATURES_FOLLOWFILE_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FOLLOWFILE_MAX')
     os.environ["TWITTER_FEATURES_FAVTWEET_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FAVTWEET_MAX')

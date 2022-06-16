@@ -3,6 +3,7 @@ import logging
 from twitterbot.config import initapi
 import glob
 import random
+import os
 import os.path
 import time
 
@@ -24,6 +25,7 @@ def tweetfilerandom(api, pathname, fallback_dir = '.'):
     # RANDOM
     files = glob.glob(f"{pathname}/*.txt")
     nb = len(files)
+    random.seed(os.getpid())
     rn = random.randint(0, nb-1)
     # POST
     # os.chdir("..")

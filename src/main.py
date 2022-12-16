@@ -87,6 +87,7 @@ def accountsloop(method):
 
 def initstep(account):
     config.switch(account)
+    config.loadProperties()
     features = os.getenv("TWITTER_FEATURES").split(',')
     api = twitterbot.initapi()
     return api, features

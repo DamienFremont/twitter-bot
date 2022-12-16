@@ -25,6 +25,8 @@ def loadProperties():
     os.environ["TWITTER_FEATURES_FOLLOWFILE_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FOLLOWFILE_MAX')
     os.environ["TWITTER_FEATURES_FAVTWEET_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FAVTWEET_MAX')
     os.environ["TWITTER_FEATURES_FOLLOWBACK_MAX"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_FOLLOWBACK_MAX')
+    if (config.has_option('Twitter', 'twitter.TWITTER_FEATURES_TWEETFILE_PATHNAME')):
+        os.environ["TWITTER_FEATURES_TWEETFILE_PATHNAME"] = config.get('Twitter', 'twitter.TWITTER_FEATURES_TWEETFILE_PATHNAME')
 
 def switch(userID):
     accounts = config.get('Twitter', 'twitter.TWITTER_ACCOUNTS').split(',')
@@ -51,6 +53,7 @@ def switch(userID):
     envFromProps(userID, 'TWITTER_INIT_FEATURES', OPTIONNAL)
     envFromProps(userID, 'TWITTER_INIT_FEATURES_FOLLOWFILE_USER', OPTIONNAL)
     envFromProps(userID, 'TWITTER_INIT_FEATURES_FOLLOWFILE_PATHNAME', OPTIONNAL)
+    envFromProps(userID, 'TWITTER_FEATURES_TWEETFILE_PATHNAME', OPTIONNAL)
 
 # PRIVATE *********************************************************************
 

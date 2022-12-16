@@ -18,13 +18,17 @@ def tweetfilerandom(api, pathname, fallback_dir = '.'):
     if not pathname:
         me = api.verify_credentials()
         pathname = f"{fallback_dir}/twitterbot-tweetfile-@{me.screen_name}"
-    logger.info(f"tweetfile | @{me.screen_name} [folder: {pathname}/]")
+    # CHECK
+    logger.info(f"tweetfile | [folder: {pathname}/]")
     if not os.path.isdir(pathname):
         logger.warning(f"tweetfile | skip tweeting: The system cannot find the pathname specified: '{pathname}'")
         return
-    # RANDOM
     files = glob.glob(f"{pathname}/*.txt")
     nb = len(files)
+    if nb == 0:
+        logger.warning(f"tweetfile | skip tweeting: empty folder: '{pathname}'")
+        return
+    # RANDOM
     random.seed(os.getpid())
     rn = random.randint(0, nb-1)
     # POST
